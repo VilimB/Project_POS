@@ -1,4 +1,5 @@
-﻿using Backend_POS.Models;
+﻿using Backend_POS.Models.DbSet;
+using Backend_POS.Models.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;

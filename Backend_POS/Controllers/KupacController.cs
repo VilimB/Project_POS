@@ -1,5 +1,7 @@
 ﻿using Backend_POS.Data;
-using Backend_POS.Models;
+using Backend_POS.Mappers;
+using Backend_POS.Models.DbSet;
+using Backend_POS.Models.DTO.Kupac;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,13 +20,15 @@ namespace Backend_POS.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Kupac>>> GetKupci()
+        public async Task<IActionResult> GetAll()
         {
-            return await _context.Kupac.ToListAsync();
+            var kupac = await _context.Kupac.ToListAsync();
+            var kupacDTO=kupac.Select(s => s.ToKupacDTO());
+            return Ok(kupac);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Kupac>> GetKupac(int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var kupac = await _context.Kupac.FindAsync(id);
 
@@ -33,65 +37,54 @@ namespace Backend_POS.Controllers
                 return NotFound();
             }
 
-            return kupac;
+            return Ok(kupac.ToKupacDTO());
         }
 
         [HttpPost]
-        public async Task<ActionResult<Kupac>> AddKupac(Kupac kupac)
+        public async Task<IActionResult> Create([FromBody] CreateKupacRequestDTO kupacDTO)
         {
-            _context.Kupac.Add(kupac);
+            var kupacModel= kupacDTO.ToKupacFromCreateDTO();
+            await _context.Kupac.AddAsync(kupacModel);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetKupac", new { id = kupac.ID }, kupac);
+            return CreatedAtAction(nameof(GetById), new {id = kupacModel.Id}, kupacModel.ToKupacDTO());
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateKupac(int id, Kupac kupac)
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateKupacRequestDTO updateKupacDTO)
         {
-            if (id != kupac.ID)
+            var kupacModel = await _context.Kupac.FirstOrDefaultAsync(x => x.Id == id);
+            
+            if (kupacModel == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+            kupacModel.Sifra = updateKupacDTO.Sifra;
+            kupacModel.Naziv = updateKupacDTO.Naziv;
+            kupacModel.Adresa = updateKupacDTO.Adresa;
+            kupacModel.Mjesto = updateKupacDTO.Mjesto;
+            await _context.SaveChangesAsync();
+            return Ok(kupacModel.ToKupacDTO());
 
-            _context.Entry(kupac).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!KupacExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteKupac(int id)
+        
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var kupac = await _context.Kupac.FindAsync(id);
-            if (kupac == null)
+            var kupacModel = await _context.Kupac.FirstOrDefaultAsync(x => x.Id ==id);
+            if (kupacModel == null)
             {
                 return NotFound();
             }
 
-            _context.Kupac.Remove(kupac);
+            _context.Kupac.Remove(kupacModel);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool KupacExists(int id)
-        {
-            return _context.Kupac.Any(e => e.ID == id);
-        }
     }
 }
+

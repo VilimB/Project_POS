@@ -1,8 +1,11 @@
-﻿using Backend_POS.Data;
-using Backend_POS.Models;
+﻿using AutoMapper;
+using Backend_POS.Data;
+using Backend_POS.Mappers;
+using Backend_POS.Models.DbSet;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Backend_POS.Models.DTO.Proizvod;
 
 namespace Backend_POS.Controllers
 {
@@ -16,15 +19,16 @@ namespace Backend_POS.Controllers
         {
             _context = context;
         }
-
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Proizvod>>> GetProizvodi()
+        public async Task<IActionResult> GetAll()
         {
-            return await _context.Proizvod.ToListAsync();
+            var proizvod = await _context.Proizvod.ToListAsync();
+            var proizvodDTO= proizvod.Select(s => s.ToProizvodDTO());
+            return Ok(proizvod);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Proizvod>> GetProizvod(int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var proizvod = await _context.Proizvod.FindAsync(id);
 
@@ -33,65 +37,54 @@ namespace Backend_POS.Controllers
                 return NotFound();
             }
 
-            return proizvod;
+            return Ok(proizvod.ToProizvodDTO());
         }
 
         [HttpPost]
-        public async Task<ActionResult<Proizvod>> AddProizvod(Proizvod proizvod)
+        public async Task<IActionResult> Create([FromBody] CreateProizvodRequestDTO proizvodDTO)
         {
-            _context.Proizvod.Add(proizvod);
+            var proizvodModel= proizvodDTO.ToProizvodFromCreateDTO();
+            await _context.Proizvod.AddAsync(proizvodModel);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetProizvod", new { id = proizvod.ID }, proizvod);
+            return CreatedAtAction(nameof(GetById), new {id = proizvodModel.Id}, proizvodModel.ToProizvodDTO());
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProizvod(int id, Proizvod proizvod)
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateProizvodRequestDTO updateDTO)
         {
-            if (id != proizvod.ID)
+            var proizvodModel = await _context.Proizvod.FirstOrDefaultAsync(x => x.Id == id);
+            
+            if (proizvodModel == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+            proizvodModel.Sifra = updateDTO.Sifra;
+            proizvodModel.Naziv = updateDTO.Naziv;
+            proizvodModel.JedinicaMjere = updateDTO.JedinicaMjere;
+            proizvodModel.Cijena = updateDTO.Cijena;
+            proizvodModel.Stanje = updateDTO.Stanje;
+            await _context.SaveChangesAsync();
+            return Ok(proizvodModel.ToProizvodDTO());
 
-            _context.Entry(proizvod).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProizvodExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProizvod(int id)
+            
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var proizvod = await _context.Proizvod.FindAsync(id);
-            if (proizvod == null)
+            var proizvodModel = await _context.Proizvod.FirstOrDefaultAsync(x => x.Id ==id);
+            if (proizvodModel == null)
             {
                 return NotFound();
             }
 
-            _context.Proizvod.Remove(proizvod);
+            _context.Proizvod.Remove(proizvodModel);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProizvodExists(int id)
-        {
-            return _context.Proizvod.Any(e => e.ID == id);
-        }
     }
 }
