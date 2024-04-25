@@ -1,4 +1,4 @@
-﻿namespace Backend_POS.Models
+﻿namespace Backend_POS.Models.DbSet
 {
     public class User
     {
