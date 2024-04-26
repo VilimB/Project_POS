@@ -1,4 +1,6 @@
 using Backend_POS.Data;
+using Backend_POS.Interfaces;
+using Backend_POS.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +16,11 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
 builder.Services.AddDbContext<DataContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<IProizvodRepository, ProizvodRepository>();
+builder.Services.AddScoped<IKupacRepository, KupacRepository>();
+builder.Services.AddScoped<IStavkeRacunaRepository, StavkeRacunaRepository>();
+builder.Services.AddScoped<IZaglavljeRacunaRepository, ZaglavljeRacunaRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

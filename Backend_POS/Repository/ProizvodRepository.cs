@@ -1,0 +1,63 @@
+﻿using Backend_POS.Data;
+using Backend_POS.Interfaces;
+using Backend_POS.Models.DbSet;
+using Backend_POS.Models.DTO.Proizvod;
+using Microsoft.EntityFrameworkCore;
+
+namespace Backend_POS.Repository
+{
+    public class ProizvodRepository : IProizvodRepository
+    {
+        private readonly DataContext _context;
+        public ProizvodRepository(DataContext context) 
+        {
+            _context= context;
+        }
+
+        public async Task<List<Proizvod>> GetAllAsync()
+        {
+            return await _context.Proizvod.ToListAsync();
+        }
+
+        public async Task<Proizvod> GetByIdAsync(int id)
+        {
+            return await _context.Proizvod.FindAsync(id);
+        }
+
+        public async Task<Proizvod?> UpdateAsync(int id, UpdateProizvodRequestDTO proizvodDTO)
+        {
+            var existingProizvod = await _context.Proizvod.FirstOrDefaultAsync(x => x.Id == id);
+            if (existingProizvod == null)
+            {
+                return null;
+            }
+            existingProizvod.Sifra = proizvodDTO.Sifra;
+            existingProizvod.Naziv = proizvodDTO.Naziv;
+            existingProizvod.JedinicaMjere = proizvodDTO.JedinicaMjere;
+            existingProizvod.Cijena = proizvodDTO.Cijena;
+            existingProizvod.Stanje = proizvodDTO.Stanje;
+            
+            await _context.SaveChangesAsync();
+            return existingProizvod;
+        }
+        public async Task<Proizvod> CreateAsync(Proizvod proizvodModel)
+        {
+            await _context.Proizvod.AddAsync(proizvodModel);
+            await _context.SaveChangesAsync();
+            return proizvodModel;
+        }
+
+        public async Task<Proizvod?> DeleteAsync(int id)
+        {
+            var proizvodModel = await _context.Proizvod.FirstOrDefaultAsync(x => x.Id == id);
+            if (proizvodModel == null)
+            {
+                return null;
+            }
+
+            _context.Proizvod.Remove(proizvodModel);
+            await _context.SaveChangesAsync();
+            return proizvodModel;
+        }
+    }
+}

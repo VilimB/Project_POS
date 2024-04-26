@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend_POS.Models.DTO.Proizvod;
+using Backend_POS.Interfaces;
 
 namespace Backend_POS.Controllers
 {
@@ -14,15 +15,17 @@ namespace Backend_POS.Controllers
     public class ProizvodController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IProizvodRepository _proizvodRepo;
 
-        public ProizvodController(DataContext context)
+        public ProizvodController(DataContext context, IProizvodRepository proizvodRepo)
         {
+            _proizvodRepo = proizvodRepo;
             _context = context;
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var proizvod = await _context.Proizvod.ToListAsync();
+            var proizvod = await _proizvodRepo.GetAllAsync();
             var proizvodDTO= proizvod.Select(s => s.ToProizvodDTO());
             return Ok(proizvod);
         }
@@ -30,7 +33,7 @@ namespace Backend_POS.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var proizvod = await _context.Proizvod.FindAsync(id);
+            var proizvod = await _proizvodRepo.GetByIdAsync(id);
 
             if (proizvod == null)
             {
@@ -44,8 +47,7 @@ namespace Backend_POS.Controllers
         public async Task<IActionResult> Create([FromBody] CreateProizvodRequestDTO proizvodDTO)
         {
             var proizvodModel= proizvodDTO.ToProizvodFromCreateDTO();
-            await _context.Proizvod.AddAsync(proizvodModel);
-            await _context.SaveChangesAsync();
+            await _proizvodRepo.CreateAsync(proizvodModel);
             return CreatedAtAction(nameof(GetById), new {id = proizvodModel.Id}, proizvodModel.ToProizvodDTO());
         }
 
@@ -53,35 +55,25 @@ namespace Backend_POS.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateProizvodRequestDTO updateDTO)
         {
-            var proizvodModel = await _context.Proizvod.FirstOrDefaultAsync(x => x.Id == id);
+            var proizvodModel = await _proizvodRepo.UpdateAsync(id, updateDTO);
             
             if (proizvodModel == null)
             {
                 return NotFound();
             }
-            proizvodModel.Sifra = updateDTO.Sifra;
-            proizvodModel.Naziv = updateDTO.Naziv;
-            proizvodModel.JedinicaMjere = updateDTO.JedinicaMjere;
-            proizvodModel.Cijena = updateDTO.Cijena;
-            proizvodModel.Stanje = updateDTO.Stanje;
-            await _context.SaveChangesAsync();
+            
             return Ok(proizvodModel.ToProizvodDTO());
-
-
-        }
+            }
             
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var proizvodModel = await _context.Proizvod.FirstOrDefaultAsync(x => x.Id ==id);
+            var proizvodModel = await _proizvodRepo.DeleteAsync(id);
             if (proizvodModel == null)
             {
                 return NotFound();
             }
-
-            _context.Proizvod.Remove(proizvodModel);
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }

@@ -1,5 +1,6 @@
 ﻿
 using Backend_POS.Data;
+using Backend_POS.Interfaces;
 using Backend_POS.Mappers;
 using Backend_POS.Models.DbSet;
 using Backend_POS.Models.DTO.Proizvod;
@@ -16,14 +17,16 @@ namespace Backend_POS.Controllers
     public class ZaglavljeRacunaController : ControllerBase
     {
         private readonly DataContext _context;
-        public ZaglavljeRacunaController(DataContext context)
+        private readonly IZaglavljeRacunaRepository _zaglavljeRacunaRepo;
+        public ZaglavljeRacunaController(DataContext context, IZaglavljeRacunaRepository zaglavljeRacunaRepo)
         {
             _context = context;
+            _zaglavljeRacunaRepo= zaglavljeRacunaRepo;
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var zaglavljeRacuna =await _context.ZaglavljeRacuna.ToListAsync();
+            var zaglavljeRacuna =await _zaglavljeRacunaRepo.GetAllAsync();
             var zaglavljeRacunaDTO = zaglavljeRacuna.Select(s => s.ToZaglavljeRacunaDTO());
             return Ok(zaglavljeRacuna);
         }
@@ -31,7 +34,7 @@ namespace Backend_POS.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var zaglavljeRacuna =await _context.ZaglavljeRacuna.FindAsync(id);
+            var zaglavljeRacuna =await _zaglavljeRacunaRepo.GetByIdAsync(id);
 
             if (zaglavljeRacuna == null)
             {
@@ -45,8 +48,7 @@ namespace Backend_POS.Controllers
         public async Task<IActionResult> Create([FromBody] CreateZaglavljeRacunaRequestDTO zaglavljeRacunaDTO)
         {
             var zaglavljeRacunaModel = zaglavljeRacunaDTO.ToZaglavljeRacunaFromCreateDTO();
-            await _context.ZaglavljeRacuna.AddAsync(zaglavljeRacunaModel);
-            await _context.SaveChangesAsync();
+            await _zaglavljeRacunaRepo.CreateAsync(zaglavljeRacunaModel);
             return CreatedAtAction(nameof(GetById), new { id = zaglavljeRacunaModel.Id }, zaglavljeRacunaModel.ToZaglavljeRacunaDTO());
         }
 
@@ -54,17 +56,13 @@ namespace Backend_POS.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateZaglavljeRacunaRequestDTO updateZaglavljeRacunaDTO)
         {
-            var zaglavljeRacunaModel =await _context.ZaglavljeRacuna.FirstOrDefaultAsync(x => x.Id == id);
+            var zaglavljeRacunaModel =await _zaglavljeRacunaRepo.UpdateAsync(id, updateZaglavljeRacunaDTO);
 
             if (zaglavljeRacunaModel == null)
             {
                 return NotFound();
             }
-            zaglavljeRacunaModel.Broj = updateZaglavljeRacunaDTO.Broj;
-            zaglavljeRacunaModel.Datum = updateZaglavljeRacunaDTO.Datum;
-            zaglavljeRacunaModel.Napomena = updateZaglavljeRacunaDTO.Napomena;
-            await _context.SaveChangesAsync();
-
+            
             return Ok(zaglavljeRacunaModel.ToZaglavljeRacunaDTO());
 
 
@@ -73,14 +71,11 @@ namespace Backend_POS.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var zaglavljeRacunaModel =await _context.ZaglavljeRacuna.FirstOrDefaultAsync(x => x.Id == id);
+            var zaglavljeRacunaModel =await _zaglavljeRacunaRepo.DeleteAsync(id);
             if (zaglavljeRacunaModel == null)
             {
                 return NotFound();
             }
-
-            _context.ZaglavljeRacuna.Remove(zaglavljeRacunaModel);
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }

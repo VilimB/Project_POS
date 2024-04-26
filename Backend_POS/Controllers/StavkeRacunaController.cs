@@ -1,4 +1,5 @@
 ﻿using Backend_POS.Data;
+using Backend_POS.Interfaces;
 using Backend_POS.Mappers;
 using Backend_POS.Models.DbSet;
 using Backend_POS.Models.DTO.Proizvod;
@@ -15,16 +16,19 @@ namespace Backend_POS.Controllers
     public class StavkeRacunaController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IStavkeRacunaRepository _stavkeRacunaRepo;
 
-        public StavkeRacunaController(DataContext context)
+        public StavkeRacunaController(DataContext context, IStavkeRacunaRepository stavkeRacunaRepo)
         {
+            _stavkeRacunaRepo = stavkeRacunaRepo;
             _context = context;
+
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var stavkeRacuna = await _context.StavkeRacuna.ToListAsync();
+            var stavkeRacuna = await _stavkeRacunaRepo.GetAllAsync();
             var stavkeRacunaDTO=stavkeRacuna.Select(s => s.ToStavkeRacunaDTO());
             return Ok(stavkeRacuna);
         }
@@ -32,7 +36,7 @@ namespace Backend_POS.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var stavkeRacuna = await _context.StavkeRacuna.FindAsync(id);
+            var stavkeRacuna = await _stavkeRacunaRepo.GetByIdAsync(id);
 
             if (stavkeRacuna == null)
             {
@@ -46,8 +50,7 @@ namespace Backend_POS.Controllers
         public async Task<IActionResult> Create([FromBody] CreateStavkeRacunaRequestDTO stavkeRacunaDTO)
         {
             var stavkeRacunaModel = stavkeRacunaDTO.ToStavkeRacunaFromCreateDTO();
-            await _context.StavkeRacuna.AddAsync(stavkeRacunaModel);
-            await _context.SaveChangesAsync();
+            await _stavkeRacunaRepo.CreateAsync(stavkeRacunaModel);
             return CreatedAtAction(nameof(GetById), new { id = stavkeRacunaModel.Id }, stavkeRacunaModel.ToStavkeRacunaDTO());
         }
 
@@ -55,21 +58,14 @@ namespace Backend_POS.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateStavkeRacunaRequestDTO updateStavkeRacunaDTO)
         {
-            var stavkeRacunaModel = await _context.StavkeRacuna.FirstOrDefaultAsync(x => x.Id == id);
+            var stavkeRacunaModel = await _stavkeRacunaRepo.UpdateAsync(id, updateStavkeRacunaDTO);
 
             if (stavkeRacunaModel == null)
             {
                 return NotFound();
             }
-            stavkeRacunaModel.Kolicina = updateStavkeRacunaDTO.Kolicina;
-            stavkeRacunaModel.Cijena = updateStavkeRacunaDTO.Cijena;
-            stavkeRacunaModel.Popust = updateStavkeRacunaDTO.Popust;
-            stavkeRacunaModel.IznosPopusta = updateStavkeRacunaDTO.IznosPopusta;
-            stavkeRacunaModel.Vrijednost = updateStavkeRacunaDTO.Vrijednost;
-            await _context.SaveChangesAsync();
+           
             return Ok(stavkeRacunaModel.ToStavkeRacunaDTO());
-
-
         }
 
 
@@ -79,15 +75,11 @@ namespace Backend_POS.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var proizvodModel = await _context.Proizvod.FirstOrDefaultAsync(x => x.Id == id);
-            if (proizvodModel == null)
+            var stavkeRacunadModel = await _stavkeRacunaRepo.DeleteAsync(id);
+            if (stavkeRacunadModel == null)
             {
                 return NotFound();
             }
-
-            _context.Proizvod.Remove(proizvodModel);
-            await _context.SaveChangesAsync();
-
             return NoContent();
         }
 
