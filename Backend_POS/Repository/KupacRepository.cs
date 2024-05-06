@@ -39,12 +39,17 @@ namespace Backend_POS.Repository
 
         public async Task<List<Kupac>> GetAllAsync()
         {
-            return await _context.Kupac.ToListAsync();
+            return await _context.Kupac.Include(c => c.ZaglavljeRacunas).ToListAsync();
         }
 
         public async Task<Kupac> GetByIdAsync(int id)
         {
-            return await _context.Kupac.FindAsync(id);
+            return await _context.Kupac.Include(c => c.ZaglavljeRacunas).FirstOrDefaultAsync(i=> i.Id ==id);
+        }
+
+        public async Task<bool> KupacExists(int id)
+        {
+            return await _context.Kupac.AnyAsync(s => s.Id == id);
         }
 
         public async Task<Kupac> UpdateAsync(int id, UpdateKupacRequestDTO kupacDTO)

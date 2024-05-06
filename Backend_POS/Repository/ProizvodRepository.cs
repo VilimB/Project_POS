@@ -16,15 +16,15 @@ namespace Backend_POS.Repository
 
         public async Task<List<Proizvod>> GetAllAsync()
         {
-            return await _context.Proizvod.ToListAsync();
+            return await _context.Proizvod.Include(c => c.StavkeRacunas).ToListAsync();
         }
 
         public async Task<Proizvod> GetByIdAsync(int id)
         {
-            return await _context.Proizvod.FindAsync(id);
+            return await _context.Proizvod.Include(c => c.StavkeRacunas).FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public async Task<Proizvod?> UpdateAsync(int id, UpdateProizvodRequestDTO proizvodDTO)
+        public async Task<Proizvod> UpdateAsync(int id, UpdateProizvodRequestDTO proizvodDTO)
         {
             var existingProizvod = await _context.Proizvod.FirstOrDefaultAsync(x => x.Id == id);
             if (existingProizvod == null)
@@ -47,7 +47,7 @@ namespace Backend_POS.Repository
             return proizvodModel;
         }
 
-        public async Task<Proizvod?> DeleteAsync(int id)
+        public async Task<Proizvod> DeleteAsync(int id)
         {
             var proizvodModel = await _context.Proizvod.FirstOrDefaultAsync(x => x.Id == id);
             if (proizvodModel == null)
@@ -58,6 +58,11 @@ namespace Backend_POS.Repository
             _context.Proizvod.Remove(proizvodModel);
             await _context.SaveChangesAsync();
             return proizvodModel;
+        }
+
+        public async Task<bool> ProizvodExists(int id)
+        {
+            return await _context.Proizvod.AnyAsync(s => s.Id == id);
         }
     }
 }

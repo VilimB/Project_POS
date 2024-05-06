@@ -15,6 +15,7 @@ namespace Backend_POS.Mappers
                 Naziv = kupacModel.Naziv,
                 Adresa = kupacModel.Adresa,
                 Mjesto = kupacModel.Mjesto,
+                ZaglavljeRacunas = kupacModel.ZaglavljeRacunas.Select(c => c.ToZaglavljeRacunaDTO()).ToList()
 
             };
 

@@ -7,5 +7,9 @@
         public decimal Popust { get; set; }
         public decimal IznosPopusta { get; set; }
         public decimal Vrijednost { get; set; }
+        public int ProizvodId { get; set; }
+        public int ZaglavljeRacunaId { get; set; }
+
+
     }
 }

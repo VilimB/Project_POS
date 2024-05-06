@@ -1,9 +1,11 @@
-﻿namespace Backend_POS.Models.DbSet
+﻿
+
+using Microsoft.AspNetCore.Identity;
+
+namespace Backend_POS.Models.DbSet
 {
-    public class User
+    public class User : IdentityUser
     {
-        public string UserName { get; set; } = string.Empty;
-        public string PasswordHash { get; set; } = string.Empty;
 
     }
 }

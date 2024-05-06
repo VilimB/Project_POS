@@ -12,20 +12,23 @@ namespace Backend_POS.Mappers
             {
                 Id = zaglavljeRacunaModel.Id,
                 Broj = zaglavljeRacunaModel.Broj,
-                Datum = zaglavljeRacunaModel.Datum,
+                Datum = (DateTime)zaglavljeRacunaModel.Datum,
                 Napomena = zaglavljeRacunaModel.Napomena,
-                
+                KupacId = zaglavljeRacunaModel.KupacId,
+                StavkeRacunas = zaglavljeRacunaModel.StavkeRacunas.Select(c => c.ToStavkeRacunaDTO()).ToList()
+
 
             };
 
         }
-        public static ZaglavljeRacuna ToZaglavljeRacunaFromCreateDTO(this CreateZaglavljeRacunaRequestDTO zaglavljeRacunaDTO)
+        public static ZaglavljeRacuna ToZaglavljeRacunaFromCreateDTO(this CreateZaglavljeRacunaRequestDTO zaglavljeRacunaDTO, int kupacId)
         {
             return new ZaglavljeRacuna
             {
                 Broj = zaglavljeRacunaDTO.Broj,
                 Datum = zaglavljeRacunaDTO.Datum,
                 Napomena = zaglavljeRacunaDTO.Napomena,
+                KupacId= zaglavljeRacunaDTO .KupacId,
                 
             };
         }

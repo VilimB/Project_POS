@@ -5,6 +5,7 @@ using Backend_POS.Models.DbSet;
 using Backend_POS.Models.DTO.Proizvod;
 using Backend_POS.Models.DTO.Stavke_Racuna;
 using Backend_POS.Models.DTO.StavkeRacuna;
+using Backend_POS.Models.DTO.ZaglavljeRacuna;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,19 +18,22 @@ namespace Backend_POS.Controllers
     {
         private readonly DataContext _context;
         private readonly IStavkeRacunaRepository _stavkeRacunaRepo;
+        private readonly IZaglavljeRacunaRepository _zaglavljeRacunaRepo;
+        private readonly IProizvodRepository _proizvodRepo;
 
-        public StavkeRacunaController(DataContext context, IStavkeRacunaRepository stavkeRacunaRepo)
+        public StavkeRacunaController(DataContext context, IStavkeRacunaRepository stavkeRacunaRepo, IZaglavljeRacunaRepository zaglavljeRacunaRepo, IProizvodRepository proizvodRepo)
         {
             _stavkeRacunaRepo = stavkeRacunaRepo;
             _context = context;
-
+            _zaglavljeRacunaRepo = zaglavljeRacunaRepo;
+            _proizvodRepo= proizvodRepo;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var stavkeRacuna = await _stavkeRacunaRepo.GetAllAsync();
-            var stavkeRacunaDTO=stavkeRacuna.Select(s => s.ToStavkeRacunaDTO());
+            var stavkeRacunaDTO = stavkeRacuna.Select(s => s.ToStavkeRacunaDTO());
             return Ok(stavkeRacuna);
         }
 
@@ -45,14 +49,41 @@ namespace Backend_POS.Controllers
 
             return Ok(stavkeRacuna.ToStavkeRacunaDTO());
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateStavkeRacunaRequestDTO stavkeRacunaDTO)
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Create([FromRoute] int id, [FromBody] CreateStavkeRacunaRequestDTO stavkeRacunaDTO)
         {
-            var stavkeRacunaModel = stavkeRacunaDTO.ToStavkeRacunaFromCreateDTO();
+            if (!await _zaglavljeRacunaRepo.ZaglavljeRacunaExists(id) && !await _proizvodRepo.ProizvodExists(id))
+            {
+                return BadRequest("Zaglavlje računa ili proizvod ne postoji");
+            }
+
+            var stavkeRacunaModel = stavkeRacunaDTO.ToStavkeRacunaFromCreateDTO(id, id);
             await _stavkeRacunaRepo.CreateAsync(stavkeRacunaModel);
             return CreatedAtAction(nameof(GetById), new { id = stavkeRacunaModel.Id }, stavkeRacunaModel.ToStavkeRacunaDTO());
         }
+
+        /*[HttpPost("{zagljavljeRacunaId}")]
+        public async Task<IActionResult> CreateZaglavlje([FromRoute] int zagljavljeRacunaId, CreateStavkeRacunaRequestDTO stavkeRacunaDTO)
+        {
+            if(!await _zaglavljeRacunaRepo.ZaglavljeRacunaExists(zagljavljeRacunaId))
+            {
+                return BadRequest("Zaglavlje racuna ne postoji");
+            }
+            var stavkeRacunaModel = stavkeRacunaDTO.ToStavkeRacunaFromCreateDTO(zagljavljeRacunaId);
+            await _stavkeRacunaRepo.CreateAsync(stavkeRacunaModel);
+            return CreatedAtAction(nameof(GetById), new { id = stavkeRacunaModel.Id }, stavkeRacunaModel.ToStavkeRacunaDTO());
+        }
+        [HttpPost("{proizvodId}")]
+        public async Task<IActionResult> CreateProizvod([FromRoute] int proizvodId, CreateStavkeRacunaRequestDTO stavkeRacunaDTO)
+        {
+            if (!await _proizvodRepo.ProizvodExists(proizvodId))
+            {
+                return BadRequest("Proizvod ne postoji");
+            }
+            var stavkeRacunaModel = stavkeRacunaDTO.ToStavkeRacunaFromCreateDTO(proizvodId);
+            await _stavkeRacunaRepo.CreateAsync(stavkeRacunaModel);
+            return CreatedAtAction(nameof(GetById), new { id = stavkeRacunaModel.Id }, stavkeRacunaModel.ToStavkeRacunaDTO());
+        }*/
 
         [HttpPut]
         [Route("{id}")]
@@ -67,7 +98,7 @@ namespace Backend_POS.Controllers
            
             return Ok(stavkeRacunaModel.ToStavkeRacunaDTO());
         }
-
+        
 
 
 
@@ -80,7 +111,7 @@ namespace Backend_POS.Controllers
             {
                 return NotFound();
             }
-            return NoContent();
+            return Ok(stavkeRacunadModel);
         }
 
     }

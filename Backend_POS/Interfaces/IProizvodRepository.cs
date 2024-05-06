@@ -10,5 +10,6 @@ namespace Backend_POS.Interfaces
         Task<Proizvod> CreateAsync(Proizvod proizvodModel);
         Task<Proizvod> UpdateAsync(int id, UpdateProizvodRequestDTO proizvodRequestDTO);
         Task<Proizvod> DeleteAsync(int id);
+        Task<bool> ProizvodExists(int id);
     }
 }

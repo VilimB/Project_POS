@@ -16,12 +16,14 @@ namespace Backend_POS.Mappers
                 Cijena = stavkeRacunaModel.Cijena,
                 Popust = stavkeRacunaModel.Popust,
                 IznosPopusta = stavkeRacunaModel.IznosPopusta,
-                Vrijednost = stavkeRacunaModel.Vrijednost
+                Vrijednost = stavkeRacunaModel.Vrijednost,
+                ProizvodId = stavkeRacunaModel.ProizvodId,
+                ZaglavljeRacunaId = stavkeRacunaModel.ZaglavljeRacunaId,
 
             };
 
         }
-        public static StavkeRacuna ToStavkeRacunaFromCreateDTO(this CreateStavkeRacunaRequestDTO stavkeRacunaDTO)
+        public static StavkeRacuna ToStavkeRacunaFromCreateDTO(this CreateStavkeRacunaRequestDTO stavkeRacunaDTO, int zaglavljeRacunaId, int proizvodId)
         {
             return new StavkeRacuna
             {
@@ -30,6 +32,9 @@ namespace Backend_POS.Mappers
                 Popust = stavkeRacunaDTO.Popust,
                 IznosPopusta = stavkeRacunaDTO.IznosPopusta,
                 Vrijednost = stavkeRacunaDTO.Vrijednost,
+                ProizvodId = proizvodId,
+                ZaglavljeRacunaId = zaglavljeRacunaId,
+
             };
         }
     }

@@ -16,6 +16,7 @@ namespace Backend_POS.Mappers
                 JedinicaMjere = proizvodModel.JedinicaMjere,
                 Cijena = proizvodModel.Cijena,
                 Stanje = proizvodModel.Stanje,
+                StavkeRacunas = proizvodModel.StavkeRacunas.Select(c =>c.ToStavkeRacunaDTO()).ToList()
 
             };
 

@@ -4,6 +4,7 @@ using Backend_POS.Interfaces;
 using Backend_POS.Mappers;
 using Backend_POS.Models.DbSet;
 using Backend_POS.Models.DTO.Proizvod;
+using Backend_POS.Models.DTO.StavkeRacuna;
 using Backend_POS.Models.DTO.ZaglavljeRacuna;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,10 +19,12 @@ namespace Backend_POS.Controllers
     {
         private readonly DataContext _context;
         private readonly IZaglavljeRacunaRepository _zaglavljeRacunaRepo;
-        public ZaglavljeRacunaController(DataContext context, IZaglavljeRacunaRepository zaglavljeRacunaRepo)
+        private readonly IKupacRepository _kupacRepo;
+        public ZaglavljeRacunaController(DataContext context, IZaglavljeRacunaRepository zaglavljeRacunaRepo, IKupacRepository kupacRepo)
         {
             _context = context;
             _zaglavljeRacunaRepo= zaglavljeRacunaRepo;
+            _kupacRepo= kupacRepo;
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -34,7 +37,7 @@ namespace Backend_POS.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var zaglavljeRacuna =await _zaglavljeRacunaRepo.GetByIdAsync(id);
+            var zaglavljeRacuna = await _zaglavljeRacunaRepo.GetByIdAsync(id);
 
             if (zaglavljeRacuna == null)
             {
@@ -43,14 +46,38 @@ namespace Backend_POS.Controllers
 
             return Ok(zaglavljeRacuna.ToZaglavljeRacunaDTO());
         }
+        [HttpPost("{kupacId}")]
+        public async Task<IActionResult> Create([FromRoute] int kupacId, [FromBody] CreateZaglavljeRacunaRequestDTO zaglavljeRacunaDTO)
+        {
+            if (!await _kupacRepo.KupacExists(kupacId))
+            {
+                return BadRequest("Kupac ne postoji");
+            }
 
-        [HttpPost]
+            var zaglavljeRacunaModel = zaglavljeRacunaDTO.ToZaglavljeRacunaFromCreateDTO(kupacId);
+            await _zaglavljeRacunaRepo.CreateAsync(zaglavljeRacunaModel);
+            return CreatedAtAction(nameof(GetById), new { id = zaglavljeRacunaModel.Id }, zaglavljeRacunaModel.ToZaglavljeRacunaDTO());
+        }
+
+        /*[HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateZaglavljeRacunaRequestDTO zaglavljeRacunaDTO)
         {
             var zaglavljeRacunaModel = zaglavljeRacunaDTO.ToZaglavljeRacunaFromCreateDTO();
             await _zaglavljeRacunaRepo.CreateAsync(zaglavljeRacunaModel);
             return CreatedAtAction(nameof(GetById), new { id = zaglavljeRacunaModel.Id }, zaglavljeRacunaModel.ToZaglavljeRacunaDTO());
         }
+        [HttpPost("{kupacId}")]
+        public async Task<IActionResult> Create([FromRoute] int id, [FromBody] CreateStavkeRacunaRequestDTO stavkeRacunaDTO)
+        {
+            if (!await _zaglavljeRacunaRepo.ZaglavljeRacunaExists(id) && !await _proizvodRepo.ProizvodExists(id))
+            {
+                return BadRequest("Zaglavlje računa ili proizvod ne postoji");
+            }
+
+            var stavkeRacunaModel = stavkeRacunaDTO.ToStavkeRacunaFromCreateDTO(id, id);
+            await _stavkeRacunaRepo.CreateAsync(stavkeRacunaModel);
+            return CreatedAtAction(nameof(GetById), new { id = stavkeRacunaModel.Id }, stavkeRacunaModel.ToStavkeRacunaDTO());
+        }*/
 
         [HttpPut]
         [Route("{id}")]
@@ -77,7 +104,7 @@ namespace Backend_POS.Controllers
                 return NotFound();
             }
 
-            return NoContent();
+            return Ok(zaglavljeRacunaModel);
         }
 
     }

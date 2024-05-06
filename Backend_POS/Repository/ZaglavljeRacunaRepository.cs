@@ -39,12 +39,12 @@ namespace Backend_POS.Repository
 
         public async Task<List<ZaglavljeRacuna>> GetAllAsync()
         {
-            return await _context.ZaglavljeRacuna.ToListAsync();
+            return await _context.ZaglavljeRacuna.Include(c => c.StavkeRacunas).ToListAsync();
         }
 
         public async Task<ZaglavljeRacuna> GetByIdAsync(int id)
         {
-            return await _context.ZaglavljeRacuna.FindAsync(id);
+            return await _context.ZaglavljeRacuna.Include(c => c.StavkeRacunas).FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<ZaglavljeRacuna> UpdateAsync(int id, UpdateZaglavljeRacunaRequestDTO zaglavljeRacunaDTO)
@@ -57,9 +57,15 @@ namespace Backend_POS.Repository
             existingZaglavljeRacuna.Broj = zaglavljeRacunaDTO.Broj;
             existingZaglavljeRacuna.Datum = zaglavljeRacunaDTO.Datum;
             existingZaglavljeRacuna.Napomena = zaglavljeRacunaDTO.Napomena;
+            existingZaglavljeRacuna.KupacId = zaglavljeRacunaDTO.KupacId;
 
             await _context.SaveChangesAsync();
             return existingZaglavljeRacuna;
+        }
+
+        public async Task<bool> ZaglavljeRacunaExists(int id)
+        {
+            return await _context.ZaglavljeRacuna.AnyAsync(s => s.Id == id);
         }
     }
 }
