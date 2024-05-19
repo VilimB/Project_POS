@@ -1,0 +1,143 @@
+<form class="container" [formGroup]="invoiceform" (ngSubmit)="SaveInvoice()">
+  <h3>{{pagetitle}}</h3>
+
+  <div class="card-body">
+
+
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label>Broj Računa</label>
+          <span class="text-danger"></span>
+          <input formControlName="broj"   class="form-control" />
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label>Datum</label>
+          <span class="text-danger"></span>
+          <input formControlName="datum" class="form-control" />
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label>Napomena</label>
+          <span class="text-danger"></span>
+          <input formControlName="napomena" class="form-control" />
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label>Naziv Kupca</label>
+          <span class="text-danger"></span>
+          <select formControlName="nazivKupca"(change)="customerChange()" class="form-control">
+            <option *ngFor="let item of masterCustomer"[value]="item.id">
+              {{item.nazivKupca}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label>Šifra Kupca</label>
+          <span class="text-danger"></span>
+          <input formControlName="sifra" class="form-control" />
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label>Mjesto</label>
+          <span class="text-danger"></span>
+          <input formControlName="mjesto" class="form-control" />
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label>Adresa</label>
+          <span class="text-danger"></span>
+          <input formControlName="adresa" class="form-control" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+
+        <form [formGroup]="invoiceform">
+          <div class="col-lg-12">
+            <table class="table table-bordered">
+              <thead class="bg-primary text-white">
+                <tr>
+                  <td>No.</td>
+                  <td>Naziv Artikla</td>
+                  <td>Šifra Artikla</td>
+                  <td>Količina</td>
+                  <td>Cijena Artikla</td>
+                  <td>Stanje</td>
+                  <td>Total</td>
+                  <td>Uredi</td>
+                </tr>
+              </thead>
+              <tbody formArrayName="proizvodip">
+                <ng-container *ngFor="let proizvodGroup of proizvodip.controls; let i = index">
+                  <tr [formGroupName]="i">
+                    <td>{{i+1}}</td>
+                    <td>
+                      <select formControlName="naziv" (change)="productChange(i)" class="form-control" >
+                        <option *ngFor="let item of masterProduct"[value]="item.id">
+                          {{item.naziv}}
+                        </option>
+                      </select>
+                    </td>
+                    <td><input formControlName="sifraProizvoda" class="form-control" /></td>
+                    <td><input formControlName="kolicina" (change)="Itemcalcyulation(i)" class="form-control" /></td>
+                    <td><input formControlName="cijena" (change)="Itemcalcyulation(i)" class="form-control" /></td>
+                    <td><input formControlName="stanje" class="form-control" /></td>
+                    <td><input formControlName="cijenaStavke" class="form-control" /></td>
+                    <td>
+                      <button type="button" class="btn btn-danger" (click)="removeProduct(i)">Ukloni</button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="6">
+                    <button type="button" class="btn btn-success" (click)="addnewproduct()">[+]</button>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </form>
+
+      </div>
+    </div>
+    <br>
+    <div clas="row">
+      <div class="col-lg-3">
+        <div class="form-group">
+          <label>Popust %</label>
+          <input formControlName="popust"(change)="summaryCalculation()"  class="form-control">
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="form-group">
+          <label>Iznos Popusta</label>
+          <input formControlName="iznosPopusta"  class="form-control">
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="form-group">
+          <label>Vrijednost</label>
+          <input formControlName="vrijednost" class="form-control">
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <br>
+        <button class="btn btn-success" type="submit">Save</button>
+
+    </div>
+
+    </div>
+  </div>
+</form>

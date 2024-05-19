@@ -1,0 +1,32 @@
+<div class="container">
+
+  <h1 class="mt-3">Dodaj Artikal</h1>
+
+<form #form="ngForm"(ngSubmit)="onFormSubmit()">
+  <div class="mt-2">
+    <div class="mt-3">
+      <label class=""form-label>Šifra Artikla</label>
+      <input type="number" id="sifraArtikla" class="form-control" name="sifraArtikla">
+    </div>
+    <div class="mt-3">
+      <label class=""form-label>Naziv Artikla</label>
+      <input type="text" id="nazivArtikla" class="form-control" name="nazivArtikla">
+    </div>
+    <div class="mt-3">
+      <label class=""form-label>Jedinica Mjere</label>
+      <input type="number" id="jedinicaMjere" class="form-control" name="jedinicaMjere">
+    </div>
+    <div class="mt-3">
+      <label class=""form-label>Cijena Artikla</label>
+      <input type="number" id="cijenaArtikla" class="form-control" name="cijenaArtikla">
+    </div>
+    <div class="mt-3">
+      <label class=""form-label>Stanje Artikla</label>
+      <input type="number" id="stanjeArtikla" class="form-control" name="stanjeArtikla">
+    </div>
+    <div class="mt-3">
+    <button type="submit" class="btn btn-primary">Spremi</button>
+    </div>
+  </div>
+</form>
+</div>
