@@ -24,12 +24,12 @@ export class AddInvoiceComponent implements OnInit {
   ngOnInit(): void {
     this.invoiceform = this.builder.group({
       broj: ['', Validators.required],
-      nazivKupca:this.builder.control('',Validators.required),
+      nazivKupac:this.builder.control('',Validators.required),
       adresa: '',
       mjesto:this.builder.control(''),
       datum: '',
       napomena: '',
-      sifra: '',
+      sifraKupac: '',
       proizvodip: this.builder.array([]),
       popust: { value: 0, disabled: false },
       iznosPopusta: { value: 0, disabled: true },
@@ -51,13 +51,13 @@ export class AddInvoiceComponent implements OnInit {
     })
   }
   customerChange(){
-    let customercode= this.invoiceform.get("nazivKupca")?.value;
+    let customercode= this.invoiceform.get("nazivKupac")?.value;
     this.service.GetCustomercbycode(customercode).subscribe(res=>{
       let custdata: any;
       custdata=res;
       if(custdata!=null){
         this.invoiceform.get("adresa")?.setValue(custdata.adresa)
-        this.invoiceform.get("sifra")?.setValue(custdata.sifra)
+        this.invoiceform.get("sifraKupac")?.setValue(custdata.sifraKupac)
         this.invoiceform.get("mjesto")?.setValue(custdata.mjesto)
       }
     });
@@ -65,14 +65,14 @@ export class AddInvoiceComponent implements OnInit {
   productChange(index:any){
     this.proizvodip = this.invoiceform.get('proizvodip') as FormArray;
     this.invoiceproduct=this.proizvodip.at(index) as FormGroup;
-    let productcode= this.invoiceproduct.get("naziv")?.value;
+    let productcode= this.invoiceproduct.get("nazivProizvod")?.value;
     this.service.GetProductbycode(productcode).subscribe(res=>{
       let productcode: any;
       productcode=res;
       if(productcode!=null){
-        this.invoiceproduct.get("sifraProizvoda")?.setValue(productcode.sifraProizvoda)
+        this.invoiceproduct.get("sifraProizvod")?.setValue(productcode.sifraProizvod)
         this.invoiceproduct.get("kolicina")?.setValue(productcode.kolicina)
-        this.invoiceproduct.get("cijena")?.setValue(productcode.cijena)
+        this.invoiceproduct.get("cijenaProizvod")?.setValue(productcode.cijenaProizvod)
         this.invoiceproduct.get("stanje")?.setValue(productcode.stanje)
         this.Itemcalcyulation(index);
 
@@ -96,11 +96,11 @@ export class AddInvoiceComponent implements OnInit {
     // Dodaj novi proizvod u proizvodi FormArray
     const proizvodGroup = this.builder.group({
       sifraProizvod: '',
-      naziv: '',
+      nazivProizvod: '',
       kolicina: 1,
-      cijena: 0,
+      cijenaProizvod: 0,
       stanje: 1,
-      cijenaStavke:0,
+      cijenaStavka:0,
     });
     this.proizvodip.push(proizvodGroup);
   }
@@ -109,9 +109,9 @@ export class AddInvoiceComponent implements OnInit {
     this.proizvodip = this.invoiceform.get('proizvodip') as FormArray;
     this.invoiceproduct=this.proizvodip.at(index) as FormGroup;
     let kolicina= this.invoiceproduct.get("kolicina")?.value;
-    let cijena= this.invoiceproduct.get("cijena")?.value;
-    let cijenaStavke=kolicina*cijena;
-    this.invoiceproduct.get("cijenaStavke")?.setValue(cijenaStavke);
+    let cijenaProizvod= this.invoiceproduct.get("cijenaProizvod")?.value;
+    let cijenaStavka=kolicina*cijenaProizvod;
+    this.invoiceproduct.get("cijenaStavka")?.setValue(cijenaStavka);
     this.summaryCalculation();
 
   }
@@ -119,7 +119,7 @@ export class AddInvoiceComponent implements OnInit {
     let array=this.invoiceform.getRawValue().proizvodip;
     let sumtotal=0;
     array.forEach((x:any)=>{
-      sumtotal=sumtotal+x.cijenaStavke;
+      sumtotal=sumtotal+x.cijenaStavka;
 
     });
     this.invoiceform.get("vrijednost")?.setValue(sumtotal);

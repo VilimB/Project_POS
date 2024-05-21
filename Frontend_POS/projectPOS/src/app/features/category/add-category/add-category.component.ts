@@ -9,10 +9,10 @@ import { HttpClient } from '@angular/common/http';
 export class AddCategoryComponent {
 
   model = {
-      sifraProizvoda: '',
-      naziv: '',
-      kolicina: 1,
-      cijena: 1,
+      sifraProizvod: '',
+      nazivProizvod: '',
+      jedinicaMjere: 1,
+      cijenaProizvod: 1,
       stanje: 1,
   };
 
