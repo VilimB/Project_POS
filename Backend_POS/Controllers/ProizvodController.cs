@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Backend_POS.Data;
+﻿using Backend_POS.Data;
 using Backend_POS.Mappers;
 using Backend_POS.Models.DbSet;
 using Microsoft.AspNetCore.Http;
@@ -48,7 +47,7 @@ namespace Backend_POS.Controllers
         {
             var proizvodModel= proizvodDTO.ToProizvodFromCreateDTO();
             await _proizvodRepo.CreateAsync(proizvodModel);
-            return CreatedAtAction(nameof(GetById), new {id = proizvodModel.Id}, proizvodModel.ToProizvodDTO());
+            return CreatedAtAction(nameof(GetById), new {id = proizvodModel.ProizvodId}, proizvodModel.ToProizvodDTO());
         }
 
         [HttpPut]

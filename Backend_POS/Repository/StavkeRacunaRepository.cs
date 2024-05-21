@@ -25,7 +25,7 @@ namespace Backend_POS.Repository
         public async Task<StavkeRacuna> DeleteAsync(int id)
         {
             {
-                var stavkeRacunaModel = await _context.StavkeRacuna.FirstOrDefaultAsync(x => x.Id == id);
+                var stavkeRacunaModel = await _context.StavkeRacuna.FirstOrDefaultAsync(x => x.StavkaId == id);
                 if (stavkeRacunaModel == null)
                 {
                     return null;
@@ -49,13 +49,13 @@ namespace Backend_POS.Repository
 
         public async Task<StavkeRacuna> UpdateAsync(int id, UpdateStavkeRacunaRequestDTO stavkeRacunaDTO)
         {
-            var existingStavkeRacuna = await _context.StavkeRacuna.FirstOrDefaultAsync(x => x.Id == id);
+            var existingStavkeRacuna = await _context.StavkeRacuna.FirstOrDefaultAsync(x => x.StavkaId == id);
             if (existingStavkeRacuna == null)
             {
                 return null;
             }
             existingStavkeRacuna.Kolicina = stavkeRacunaDTO.Kolicina;
-            existingStavkeRacuna.Cijena = stavkeRacunaDTO.Cijena;
+            existingStavkeRacuna.CijenaStavka = stavkeRacunaDTO.CijenaStavka;
             existingStavkeRacuna.Popust = stavkeRacunaDTO.Popust;
             existingStavkeRacuna.IznosPopusta = stavkeRacunaDTO.IznosPopusta;
             existingStavkeRacuna.Vrijednost = stavkeRacunaDTO.Vrijednost;

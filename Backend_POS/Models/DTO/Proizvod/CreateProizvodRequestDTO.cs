@@ -2,10 +2,10 @@
 {
     public class CreateProizvodRequestDTO
     {
-        public int Sifra { get; set; }
-        public string Naziv { get; set; } = string.Empty;
-        public int JedinicaMjere { get; set; }
-        public decimal Cijena { get; set; }
+        public string SifraProizvod { get; set; } = string.Empty;
+        public string NazivProizvod { get; set; } = string.Empty;
+        public string JedinicaMjere { get; set; } = string.Empty;
+        public decimal CijenaProizvod { get; set; }
         public int Stanje { get; set; }
     }
 }

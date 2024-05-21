@@ -1,17 +1,20 @@
-﻿namespace Backend_POS.Models.DbSet
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Backend_POS.Models.DbSet
 {
     public class Proizvod
     {
-        public int Id { get; set; } 
-        public int Sifra { get; set; }
-        public string Naziv{ get; set; } = string.Empty;
-        public int JedinicaMjere { get; set; }
-        public decimal Cijena { get; set; }
+        [Key]
+        public int ProizvodId { get; set; } 
+        
+        public string SifraProizvod { get; set; } = string.Empty;
+        public string NazivProizvod { get; set; } = string.Empty;
+        public string JedinicaMjere { get; set; } = string.Empty;
+        public decimal CijenaProizvod { get; set; }
         public int Stanje { get; set; }
         public ICollection<StavkeRacuna>? StavkeRacunas { get; set; }
 
-        /*// Ova kolekcija omogućuje jednostruku relaciju (1:N) s tablicom StavkeRacuna
-        public required ICollection<Stavke_racuna> StavkeRacuna { get; set; }*/
+        
     }
 
 }

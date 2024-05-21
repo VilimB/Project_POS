@@ -25,7 +25,7 @@ namespace Backend_POS.Repository
         public async Task<ZaglavljeRacuna> DeleteAsync(int id)
         {
             {
-                var zaglavljeRacunaModel = await _context.ZaglavljeRacuna.FirstOrDefaultAsync(x => x.Id == id);
+                var zaglavljeRacunaModel = await _context.ZaglavljeRacuna.FirstOrDefaultAsync(x => x.ZaglavljeId == id);
                 if (zaglavljeRacunaModel == null)
                 {
                     return null;
@@ -44,12 +44,12 @@ namespace Backend_POS.Repository
 
         public async Task<ZaglavljeRacuna> GetByIdAsync(int id)
         {
-            return await _context.ZaglavljeRacuna.Include(c => c.StavkeRacunas).FirstOrDefaultAsync(i => i.Id == id);
+            return await _context.ZaglavljeRacuna.Include(c => c.StavkeRacunas).FirstOrDefaultAsync(i => i.ZaglavljeId == id);
         }
 
         public async Task<ZaglavljeRacuna> UpdateAsync(int id, UpdateZaglavljeRacunaRequestDTO zaglavljeRacunaDTO)
         {
-            var existingZaglavljeRacuna = await _context.ZaglavljeRacuna.FirstOrDefaultAsync(x => x.Id == id);
+            var existingZaglavljeRacuna = await _context.ZaglavljeRacuna.FirstOrDefaultAsync(x => x.ZaglavljeId == id);
             if (existingZaglavljeRacuna == null)
             {
                 return null;
@@ -65,7 +65,7 @@ namespace Backend_POS.Repository
 
         public async Task<bool> ZaglavljeRacunaExists(int id)
         {
-            return await _context.ZaglavljeRacuna.AnyAsync(s => s.Id == id);
+            return await _context.ZaglavljeRacuna.AnyAsync(s => s.ZaglavljeId == id);
         }
     }
 }

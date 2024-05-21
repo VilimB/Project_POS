@@ -21,20 +21,20 @@ namespace Backend_POS.Repository
 
         public async Task<Proizvod> GetByIdAsync(int id)
         {
-            return await _context.Proizvod.Include(c => c.StavkeRacunas).FirstOrDefaultAsync(i => i.Id == id);
+            return await _context.Proizvod.Include(c => c.StavkeRacunas).FirstOrDefaultAsync(i => i.ProizvodId == id);
         }
 
         public async Task<Proizvod> UpdateAsync(int id, UpdateProizvodRequestDTO proizvodDTO)
         {
-            var existingProizvod = await _context.Proizvod.FirstOrDefaultAsync(x => x.Id == id);
+            var existingProizvod = await _context.Proizvod.FirstOrDefaultAsync(x => x.ProizvodId == id);
             if (existingProizvod == null)
             {
                 return null;
             }
-            existingProizvod.Sifra = proizvodDTO.Sifra;
-            existingProizvod.Naziv = proizvodDTO.Naziv;
+            existingProizvod.SifraProizvod = proizvodDTO.SifraProizvod;
+            existingProizvod.NazivProizvod = proizvodDTO.NazivProizvod;
             existingProizvod.JedinicaMjere = proizvodDTO.JedinicaMjere;
-            existingProizvod.Cijena = proizvodDTO.Cijena;
+            existingProizvod.CijenaProizvod = proizvodDTO.CijenaProizvod;
             existingProizvod.Stanje = proizvodDTO.Stanje;
             
             await _context.SaveChangesAsync();
@@ -49,7 +49,7 @@ namespace Backend_POS.Repository
 
         public async Task<Proizvod> DeleteAsync(int id)
         {
-            var proizvodModel = await _context.Proizvod.FirstOrDefaultAsync(x => x.Id == id);
+            var proizvodModel = await _context.Proizvod.FirstOrDefaultAsync(x => x.ProizvodId == id);
             if (proizvodModel == null)
             {
                 return null;
@@ -62,7 +62,7 @@ namespace Backend_POS.Repository
 
         public async Task<bool> ProizvodExists(int id)
         {
-            return await _context.Proizvod.AnyAsync(s => s.Id == id);
+            return await _context.Proizvod.AnyAsync(s => s.ProizvodId == id);
         }
     }
 }

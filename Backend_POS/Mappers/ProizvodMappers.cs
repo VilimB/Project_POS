@@ -10,11 +10,11 @@ namespace Backend_POS.Mappers
         {
             return new ProizvodDTO
             {
-                Id = proizvodModel.Id,
-                Sifra = proizvodModel.Sifra,
-                Naziv = proizvodModel.Naziv,
+                ProizvodId = proizvodModel.ProizvodId,
+                SifraProizvod = proizvodModel.SifraProizvod,
+                NazivProizvod = proizvodModel.NazivProizvod,
                 JedinicaMjere = proizvodModel.JedinicaMjere,
-                Cijena = proizvodModel.Cijena,
+                CijenaProizvod = proizvodModel.CijenaProizvod,
                 Stanje = proizvodModel.Stanje,
                 StavkeRacunas = proizvodModel.StavkeRacunas.Select(c =>c.ToStavkeRacunaDTO()).ToList()
 
@@ -26,10 +26,10 @@ namespace Backend_POS.Mappers
         {
             return new Proizvod
             {
-                Sifra = proizvodDTO.Sifra,
-                Naziv = proizvodDTO.Naziv,
+                SifraProizvod = proizvodDTO.SifraProizvod,
+                NazivProizvod = proizvodDTO.NazivProizvod,
                 JedinicaMjere = proizvodDTO.JedinicaMjere,
-                Cijena = proizvodDTO.Cijena,
+                CijenaProizvod = proizvodDTO.CijenaProizvod,
                 Stanje = proizvodDTO.Stanje,
             };
         }

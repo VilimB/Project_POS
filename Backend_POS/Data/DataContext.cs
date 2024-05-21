@@ -39,39 +39,35 @@ public class DataContext : IdentityDbContext<User>
         modelBuilder.Entity<ZaglavljeRacuna>()
             .HasMany(e => e.StavkeRacunas)
             .WithOne(e => e.ZaglavljeRacuna)
-            .HasForeignKey(e => e.ZaglavljeRacunaId)
-            .HasPrincipalKey(e => e.Id);
-        
+            .HasForeignKey(e => e.ZaglavljeId)
+            .HasPrincipalKey(e => e.ZaglavljeId);
+
         modelBuilder.Entity<Kupac>()
             .HasMany(e => e.ZaglavljeRacunas)
             .WithOne(e => e.Kupac)
             .HasForeignKey(e => e.KupacId)
-            .HasPrincipalKey(e => e.Id);
+            .HasPrincipalKey(e => e.KupacId);
 
         modelBuilder.Entity<Proizvod>()
             .HasMany(e => e.StavkeRacunas)
             .WithOne(e => e.Proizvod)
             .HasForeignKey(e => e.ProizvodId)
-            .HasPrincipalKey(e => e.Id);
-    }
-    /*protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        // Relacija ZaglavljeRacuna -> Kupac
-        modelBuilder.Entity<Zaglavlje_racuna>()
-            .HasOne(zr => zr.Kupac)
-            .WithMany()
-            .HasForeignKey(zr => zr.KupacID);
+            .HasPrincipalKey(e => e.ProizvodId);
+        
+            
 
-        // Relacija StavkaRacuna -> ZaglavljeRacuna
-        modelBuilder.Entity<Stavke_racuna>()
-            .HasOne(sr => sr.ZaglavljeRacuna)
-            .WithMany(zr => zr.StavkeRacuna)
-            .HasForeignKey(sr => sr.Zaglavlje_racunaID);
+        modelBuilder.Entity<ZaglavljeRacuna>()
+            .HasIndex(e => e.Broj)
+            .IsUnique();
+
+        modelBuilder.Entity<Kupac>()
+            .HasIndex(e => e.SifraKupac)
+            .IsUnique();
+
+        modelBuilder.Entity<Proizvod>()
+            .HasIndex(e => e.SifraProizvod)
+            .IsUnique();
+
+    }
     
-        // Relacija StavkaRacuna -> Proizvod
-        modelBuilder.Entity<Stavke_racuna>()
-            .HasOne(sr => sr.Proizvod)
-            .WithMany()
-            .HasForeignKey(sr => sr.ProizvodID);
-    }*/
 }

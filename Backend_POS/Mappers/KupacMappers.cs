@@ -10,9 +10,9 @@ namespace Backend_POS.Mappers
         {
             return new KupacDTO
             {
-                Id = kupacModel.Id,
-                Sifra = kupacModel.Sifra,
-                Naziv = kupacModel.Naziv,
+                KupacId = kupacModel.KupacId,
+                SifraKupac = kupacModel.SifraKupac,
+                NazivKupac = kupacModel.NazivKupac,
                 Adresa = kupacModel.Adresa,
                 Mjesto = kupacModel.Mjesto,
                 ZaglavljeRacunas = kupacModel.ZaglavljeRacunas.Select(c => c.ToZaglavljeRacunaDTO()).ToList()
@@ -24,8 +24,8 @@ namespace Backend_POS.Mappers
         {
             return new Kupac
             {
-                Sifra = kupacDTO.Sifra,
-                Naziv = kupacDTO.Naziv,
+                SifraKupac = kupacDTO.SifraKupac,
+                NazivKupac = kupacDTO.NazivKupac,
                 Adresa = kupacDTO.Adresa,
                 Mjesto = kupacDTO.Mjesto,
         };

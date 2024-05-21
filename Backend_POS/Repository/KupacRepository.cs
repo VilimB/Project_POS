@@ -25,7 +25,7 @@ namespace Backend_POS.Repository
         public async Task<Kupac> DeleteAsync(int id)
         {
             {
-                var kupacModel = await _context.Kupac.FirstOrDefaultAsync(x => x.Id == id);
+                var kupacModel = await _context.Kupac.FirstOrDefaultAsync(x => x.KupacId == id);
                 if (kupacModel == null)
                 {
                     return null;
@@ -44,23 +44,23 @@ namespace Backend_POS.Repository
 
         public async Task<Kupac> GetByIdAsync(int id)
         {
-            return await _context.Kupac.Include(c => c.ZaglavljeRacunas).FirstOrDefaultAsync(i=> i.Id ==id);
+            return await _context.Kupac.Include(c => c.ZaglavljeRacunas).FirstOrDefaultAsync(i => i.KupacId == id);
         }
 
         public async Task<bool> KupacExists(int id)
         {
-            return await _context.Kupac.AnyAsync(s => s.Id == id);
+            return await _context.Kupac.AnyAsync(s => s.KupacId == id);
         }
 
-        public async Task<Kupac> UpdateAsync(int id, UpdateKupacRequestDTO kupacDTO)
+        public async Task<Kupac?> UpdateAsync(int id, UpdateKupacRequestDTO kupacDTO)
         {
-            var existingKupac = await _context.Kupac.FirstOrDefaultAsync(x => x.Id == id);
+            var existingKupac = await _context.Kupac.FirstOrDefaultAsync(x => x.KupacId == id);
             if (existingKupac == null)
             {
                 return null;
             }
-            existingKupac.Sifra = kupacDTO.Sifra;
-            existingKupac.Naziv = kupacDTO.Naziv;
+            existingKupac.SifraKupac = kupacDTO.SifraKupac;
+            existingKupac.NazivKupac = kupacDTO.NazivKupac;
             existingKupac.Adresa = kupacDTO.Adresa;
             existingKupac.Mjesto = kupacDTO.Mjesto;
 

@@ -56,28 +56,9 @@ namespace Backend_POS.Controllers
 
             var zaglavljeRacunaModel = zaglavljeRacunaDTO.ToZaglavljeRacunaFromCreateDTO(kupacId);
             await _zaglavljeRacunaRepo.CreateAsync(zaglavljeRacunaModel);
-            return CreatedAtAction(nameof(GetById), new { id = zaglavljeRacunaModel.Id }, zaglavljeRacunaModel.ToZaglavljeRacunaDTO());
+            return CreatedAtAction(nameof(GetById), new { id = zaglavljeRacunaModel.ZaglavljeId }, zaglavljeRacunaModel.ToZaglavljeRacunaDTO());
         }
 
-        /*[HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateZaglavljeRacunaRequestDTO zaglavljeRacunaDTO)
-        {
-            var zaglavljeRacunaModel = zaglavljeRacunaDTO.ToZaglavljeRacunaFromCreateDTO();
-            await _zaglavljeRacunaRepo.CreateAsync(zaglavljeRacunaModel);
-            return CreatedAtAction(nameof(GetById), new { id = zaglavljeRacunaModel.Id }, zaglavljeRacunaModel.ToZaglavljeRacunaDTO());
-        }
-        [HttpPost("{kupacId}")]
-        public async Task<IActionResult> Create([FromRoute] int id, [FromBody] CreateStavkeRacunaRequestDTO stavkeRacunaDTO)
-        {
-            if (!await _zaglavljeRacunaRepo.ZaglavljeRacunaExists(id) && !await _proizvodRepo.ProizvodExists(id))
-            {
-                return BadRequest("Zaglavlje računa ili proizvod ne postoji");
-            }
-
-            var stavkeRacunaModel = stavkeRacunaDTO.ToStavkeRacunaFromCreateDTO(id, id);
-            await _stavkeRacunaRepo.CreateAsync(stavkeRacunaModel);
-            return CreatedAtAction(nameof(GetById), new { id = stavkeRacunaModel.Id }, stavkeRacunaModel.ToStavkeRacunaDTO());
-        }*/
 
         [HttpPut]
         [Route("{id}")]

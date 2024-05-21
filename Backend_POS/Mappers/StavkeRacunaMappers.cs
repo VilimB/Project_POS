@@ -11,14 +11,14 @@ namespace Backend_POS.Mappers
         {
             return new StavkeRacunaDTO
             {
-                Id = stavkeRacunaModel.Id,
+                StavkaId = stavkeRacunaModel.StavkaId,
                 Kolicina = stavkeRacunaModel.Kolicina,
-                Cijena = stavkeRacunaModel.Cijena,
+                CijenaStavka = stavkeRacunaModel.CijenaStavka,
                 Popust = stavkeRacunaModel.Popust,
                 IznosPopusta = stavkeRacunaModel.IznosPopusta,
                 Vrijednost = stavkeRacunaModel.Vrijednost,
                 ProizvodId = stavkeRacunaModel.ProizvodId,
-                ZaglavljeRacunaId = stavkeRacunaModel.ZaglavljeRacunaId,
+                ZaglavljeId = stavkeRacunaModel.ZaglavljeId,
 
             };
 
@@ -28,12 +28,12 @@ namespace Backend_POS.Mappers
             return new StavkeRacuna
             {
                 Kolicina = stavkeRacunaDTO.Kolicina,
-                Cijena = stavkeRacunaDTO.Cijena,
+                CijenaStavka = stavkeRacunaDTO.CijenaStavka,
                 Popust = stavkeRacunaDTO.Popust,
                 IznosPopusta = stavkeRacunaDTO.IznosPopusta,
                 Vrijednost = stavkeRacunaDTO.Vrijednost,
                 ProizvodId = proizvodId,
-                ZaglavljeRacunaId = zaglavljeRacunaId,
+                ZaglavljeId = zaglavljeRacunaId,
 
             };
         }

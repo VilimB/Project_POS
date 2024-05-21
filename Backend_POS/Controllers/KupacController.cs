@@ -48,7 +48,7 @@ namespace Backend_POS.Controllers
         {
             var kupacModel= kupacDTO.ToKupacFromCreateDTO();
             await _kupacRepo.CreateAsync(kupacModel);
-            return CreatedAtAction(nameof(GetById), new {id = kupacModel.Id}, kupacModel.ToKupacDTO());
+            return CreatedAtAction(nameof(GetById), new {id = kupacModel.KupacId}, kupacModel.ToKupacDTO());
         }
 
         [HttpPut]

@@ -10,7 +10,7 @@ namespace Backend_POS.Mappers
         {
             return new ZaglavljeRacunaDTO
             {
-                Id = zaglavljeRacunaModel.Id,
+                ZaglavljeId = zaglavljeRacunaModel.ZaglavljeId,
                 Broj = zaglavljeRacunaModel.Broj,
                 Datum = (DateTime)zaglavljeRacunaModel.Datum,
                 Napomena = zaglavljeRacunaModel.Napomena,
