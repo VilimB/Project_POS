@@ -1,32 +1,31 @@
 <div class="container">
-
   <h1 class="mt-3">Dodaj Artikal</h1>
 
-<form #form="ngForm"(ngSubmit)="onFormSubmit()">
-  <div class="mt-2">
-    <div class="mt-3">
-      <label class=""form-label>Šifra Artikla</label>
-      <input type="number" id="sifraArtikla" class="form-control" name="sifraArtikla">
+  <form #form="ngForm" (ngSubmit)="onFormSubmit()">
+    <div class="mt-2">
+      <div class="mt-3">
+        <label class="" for="sifraProizvoda">Šifra Artikla</label>
+        <input type="text" id="sifraProizvoda" class="form-control" name="sifraProizvoda" [(ngModel)]="model.sifraProizvoda">
+      </div>
+      <div class="mt-3">
+        <label class="" for="naziv">Naziv Artikla</label>
+        <input type="text" id="naziv" class="form-control" name="naziv" [(ngModel)]="model.naziv">
+      </div>
+      <div class="mt-3">
+        <label class="" for="kolicina">Količina</label>
+        <input type="number" id="kolicina" class="form-control" name="kolicina" [(ngModel)]="model.kolicina">
+      </div>
+      <div class="mt-3">
+        <label class="" for="cijena">Cijena</label>
+        <input type="number" id="cijena" class="form-control" name="cijena" [(ngModel)]="model.cijena">
+      </div>
+      <div class="mt-3">
+        <label class="" for="stanje">Stanje</label>
+        <input type="number" id="stanje" class="form-control" name="stanje" [(ngModel)]="model.stanje">
+      </div>
+      <div class="mt-3">
+        <button type="submit" class="btn btn-primary">Spremi</button>
+      </div>
     </div>
-    <div class="mt-3">
-      <label class=""form-label>Naziv Artikla</label>
-      <input type="text" id="nazivArtikla" class="form-control" name="nazivArtikla">
-    </div>
-    <div class="mt-3">
-      <label class=""form-label>Jedinica Mjere</label>
-      <input type="number" id="jedinicaMjere" class="form-control" name="jedinicaMjere">
-    </div>
-    <div class="mt-3">
-      <label class=""form-label>Cijena Artikla</label>
-      <input type="number" id="cijenaArtikla" class="form-control" name="cijenaArtikla">
-    </div>
-    <div class="mt-3">
-      <label class=""form-label>Stanje Artikla</label>
-      <input type="number" id="stanjeArtikla" class="form-control" name="stanjeArtikla">
-    </div>
-    <div class="mt-3">
-    <button type="submit" class="btn btn-primary">Spremi</button>
-    </div>
-  </div>
-</form>
+  </form>
 </div>

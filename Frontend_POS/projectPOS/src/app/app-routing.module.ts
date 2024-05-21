@@ -4,6 +4,9 @@ import { CategoryListComponent } from './features/category/category-list/categor
 import { AddCategoryComponent } from './features/category/add-category/add-category.component';
 import { InvoiceListComponent } from './features/invoice/invoice-list/invoice-list.component';
 import { AddInvoiceComponent } from './features/invoice/add-invoice/add-invoice.component';
+import { LoginComponent } from './features/login/login.component';
+import { HomeComponent } from './features/home/home.component';
+
 
 const routes: Routes = [
   {
@@ -22,6 +25,18 @@ const routes: Routes = [
     path:'kasa',
     component:AddInvoiceComponent
   },
+  {
+  path:'transakcije/kasa',
+    component:AddInvoiceComponent
+  },
+  {
+    path:'login',
+      component:LoginComponent
+    },
+    {
+      path:'',
+        component:HomeComponent
+      },
 
 ];
 

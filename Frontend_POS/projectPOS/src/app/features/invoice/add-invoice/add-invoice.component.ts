@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MasterService } from '../../../service/master.service';
 import { Router } from '@angular/router';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-add-invoice',
   templateUrl: './add-invoice.component.html',
@@ -17,8 +17,9 @@ export class AddInvoiceComponent implements OnInit {
 
   masterCustomer:any;
   masterProduct:any;
+  isedit = false;
 
-  constructor(private builder: FormBuilder, private service:MasterService, private router:Router,) { }
+  constructor(private builder: FormBuilder, private service:MasterService, private router:Router,private alert: MasterService) { }
 
   ngOnInit(): void {
     this.invoiceform = this.builder.group({
@@ -77,19 +78,24 @@ export class AddInvoiceComponent implements OnInit {
 
       }
     });
-
-
   }
+  SaveInvoice() {
+    if (this.invoiceform.valid) {
+      this.service.saveInvoice(this.invoiceform.getRawValue()).subscribe(res=>{
+        let result:any;
+        result=res;
+        console.log(result);
+      })
+      } else {
+      this.alert.warning('Please enter values in all mandatory filed', 'Validation');
+    }
 
-
-  SaveInvoice(): void {
-    console.log(this.invoiceform.value);
   }
 
   addnewproduct(): void {
     // Dodaj novi proizvod u proizvodi FormArray
     const proizvodGroup = this.builder.group({
-      sifraProizvoda: '',
+      sifraProizvod: '',
       naziv: '',
       kolicina: 1,
       cijena: 0,
@@ -134,121 +140,3 @@ export class AddInvoiceComponent implements OnInit {
   }
 }
 
- /*this.proizvodi.push(newProductGroup);
-
-
-  get proizvodi(): FormArray {
-    return this.invoiceform.get('proizvodi') as FormArray;
-  }*/
-/*import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
-
-@Component({
-  selector: 'app-add-invoice',
-  templateUrl: './add-invoice.component.html',
-  styleUrls: ['./add-invoice.component.css']
-})
-export class AddInvoiceComponent implements OnInit {
-  pagetitle = "Dodaj račun";
-  invoiceform !: FormGroup;
-  invoiceproizvodi!: FormArray<any>;
-
-  constructor(private builder: FormBuilder) { }
-
-  ngOnInit(): void {
-    this.initForm();
-  }
-
-  initForm(): void {
-    this.invoiceform = this.builder.group({
-      broj: ['', Validators.required],
-      nazivKupca: ['', Validators.required],
-      adresa: [''],
-      datum: [''],
-      napomena: [''],
-      sifra: [''],
-      proizvodi: this.builder.array([]), // FormArray za tablični unos proizvoda
-      popust: [''],
-      naziv: [''],
-      iznosPopusta: [''],
-      vrijednost: ['']
-    });
-  }
-
-  SaveInvoice(): void {
-    console.log(this.invoiceform.value);
-  }
-
-  addnewproduct(): void {
-    // Dodaj novi proizvod u FormArray
-    const newProductGroup = this.builder.group({
-      sifraProizvoda: [''],
-      nazivProizvoda: [''],
-      kolicina: [''],
-      cijena: [''],
-      stanje: ['']
-    });
-    (this.invoiceform.get('proizvodi') as FormArray).push(newProductGroup);
-  }
-
-  removeProduct(i: number): void {
-    const proizvodiArray = this.invoiceform.get('proizvodi') as FormArray;
-    proizvodiArray.removeAt(i);
-  }
-}
-*/
-/*import { Component, OnInit } from '@angular/core';
-import { FormBuilder,FormGroup,Validators, } from '@angular/forms';
-import { table } from 'console';
-@Component({
-  selector: 'app-add-invoice',
-  templateUrl: './add-invoice.component.html',
-  styleUrl: './add-invoice.component.css'
-})
-export class AddInvoiceComponent implements OnInit{
-constructor(private builder:FormBuilder){}
-pagetitle="Dodaj račun"
-
-  ngOnInit(): void {
-  }
-  invoiceform=this.builder.group({
-    broj:this.builder.control('',Validators.required),
-    nazivKupca:this.builder.control('',Validators.required),
-    adresa:this.builder.control(''),
-    datum:this.builder.control(''),
-    napomena:this.builder.control(''),
-    sifra:this.builder.control(''),
-    table: this.builder.group({
-      sifraProizvoda: this.builder.control(''),
-      naziv: this.builder.control(''),
-      kolicina: this.builder.control(''),
-      cijena: this.builder.control(''),
-      stanje: this.builder.control(''),
-      uredi: this.builder.control(''),
-    }as any),
-    popust:this.builder.control(''),
-    iznosPopusta:this.builder.control(''),
-    vrijednost:this.builder.control(''),
-
-
-  });
-
-  SaveInvoice(){
-    console.log(this.invoiceform.value)
-
-  }
-  addnewproduct(): void {
-    // Dodavanje novog proizvoda u formularsku grupu table
-    const tableGroup = this.invoiceform.get('table') as FormGroup;
-    if (tableGroup) {
-      tableGroup.addControl('noviProizvod', this.builder.group({
-        sifraProizvoda: [''],
-        nazivProizvoda: [''],
-        kolicina: [''],
-        cijena: [''],
-        stanje: [''],
-        uredi: ['']
-      }));
-  }}
-
-}*/

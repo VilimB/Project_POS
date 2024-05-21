@@ -1,5 +1,5 @@
 export interface AddCategoryRequest{
-  sifraProizvoda: number;
+  sifraProizvoda: string;
   name: string;
   mjera: number;
   cijena: number;
