@@ -47,6 +47,8 @@ namespace Backend_POS.Repository
             return await _context.ZaglavljeRacuna.Include(c => c.StavkeRacunas).FirstOrDefaultAsync(i => i.ZaglavljeId == id);
         }
 
+        
+
         public async Task<ZaglavljeRacuna> UpdateAsync(int id, UpdateZaglavljeRacunaRequestDTO zaglavljeRacunaDTO)
         {
             var existingZaglavljeRacuna = await _context.ZaglavljeRacuna.FirstOrDefaultAsync(x => x.ZaglavljeId == id);
@@ -67,5 +69,12 @@ namespace Backend_POS.Repository
         {
             return await _context.ZaglavljeRacuna.AnyAsync(s => s.ZaglavljeId == id);
         }
+        public async Task<int?> GetIdByNumber(int broj)
+        {
+            var zaglavljeRacuna = await _context.ZaglavljeRacuna.FirstOrDefaultAsync(zr => zr.Broj == broj);
+            return zaglavljeRacuna?.ZaglavljeId;
+        }
+
     }
 }
+

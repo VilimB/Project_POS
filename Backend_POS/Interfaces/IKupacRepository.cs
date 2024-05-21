@@ -9,7 +9,7 @@ namespace Backend_POS.Interfaces
         Task<List<Kupac>> GetAllAsync();
         Task<Kupac> GetByIdAsync(int id);
         Task<Kupac> CreateAsync(Kupac kupacModel);
-        Task<Kupac> UpdateAsync(int id, UpdateKupacRequestDTO KupacRequestDTO);
+        Task<Kupac?> UpdateAsync(int id, UpdateKupacRequestDTO KupacRequestDTO);
         Task<Kupac> DeleteAsync(int id);
         Task<bool> KupacExists(int id);
     }

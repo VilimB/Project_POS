@@ -53,7 +53,13 @@ builder.Services.AddScoped<IKupacRepository, KupacRepository>();
 builder.Services.AddScoped<IStavkeRacunaRepository, StavkeRacunaRepository>();
 builder.Services.AddScoped<IZaglavljeRacunaRepository, ZaglavljeRacunaRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("http://localhost:4200")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
 var app = builder.Build();
 
 
@@ -76,8 +82,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowSpecificOrigin");
+app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllers();
 

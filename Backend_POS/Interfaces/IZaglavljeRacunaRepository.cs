@@ -12,5 +12,6 @@ namespace Backend_POS.Interfaces
         Task<ZaglavljeRacuna> UpdateAsync(int id, UpdateZaglavljeRacunaRequestDTO zaglavljeRacunaRequestDTO);
         Task<ZaglavljeRacuna> DeleteAsync(int id);
         Task<bool> ZaglavljeRacunaExists(int id);
+        Task<int?> GetIdByNumber(int broj);
     }
 }

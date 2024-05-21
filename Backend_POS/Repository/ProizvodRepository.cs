@@ -59,6 +59,11 @@ namespace Backend_POS.Repository
             await _context.SaveChangesAsync();
             return proizvodModel;
         }
+        public async Task<int?> GetIdByName(string nazivProizvod)
+        {
+            var proizvod = await _context.Proizvod.FirstOrDefaultAsync(p => p.NazivProizvod == nazivProizvod);
+            return proizvod?.ProizvodId;
+        }
 
         public async Task<bool> ProizvodExists(int id)
         {

@@ -12,7 +12,7 @@ namespace Backend_POS.Models.DbSet
         public string JedinicaMjere { get; set; } = string.Empty;
         public decimal CijenaProizvod { get; set; }
         public int Stanje { get; set; }
-        public ICollection<StavkeRacuna>? StavkeRacunas { get; set; }
+        public ICollection<StavkeRacuna> StavkeRacunas { get; set; }= new List<StavkeRacuna>();
 
         
     }

@@ -10,6 +10,6 @@ namespace Backend_POS.Models.DTO.Proizvod
         public string JedinicaMjere { get; set; } = string.Empty;
         public decimal CijenaProizvod { get; set; }
         public int Stanje { get; set; }
-        public required List<StavkeRacunaDTO> StavkeRacunas { get; set; }
+        public  List<StavkeRacunaDTO>? StavkeRacunas { get; set; }
     }
 }

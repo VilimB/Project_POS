@@ -49,17 +49,31 @@ namespace Backend_POS.Controllers
 
             return Ok(stavkeRacuna.ToStavkeRacunaDTO());
         }
-        [HttpPost("{id}")]
-        public async Task<IActionResult> Create([FromRoute] int id, [FromBody] CreateStavkeRacunaRequestDTO stavkeRacunaDTO)
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateStavkeRacunaRequestDTO stavkeRacunaDTO)
         {
-            if (!await _zaglavljeRacunaRepo.ZaglavljeRacunaExists(id) && !await _proizvodRepo.ProizvodExists(id))
+            Console.WriteLine("Received request:");
+            Console.WriteLine($"Broj: {stavkeRacunaDTO.Broj}");
+            Console.WriteLine($"Naziv: {stavkeRacunaDTO.NazivProizvod}");
+            var zaglavljeRacunaId = await _zaglavljeRacunaRepo.GetIdByNumber(stavkeRacunaDTO.Broj);
+            if (zaglavljeRacunaId == null)
             {
-                return BadRequest("Zaglavlje računa ili proizvod ne postoji");
+                return BadRequest("Zaglavlje računa ne postoji");
             }
 
-            var stavkeRacunaModel = stavkeRacunaDTO.ToStavkeRacunaFromCreateDTO(id, id);
+            var proizvodId = await _proizvodRepo.GetIdByName(stavkeRacunaDTO.NazivProizvod);
+            if (proizvodId == null)
+            {
+                // Logiranje za debugging
+                Console.WriteLine($"Proizvod s nazivom {stavkeRacunaDTO.NazivProizvod} ne postoji.");
+                return BadRequest("Proizvod ne postoji");
+            }
+
+            var stavkeRacunaModel = stavkeRacunaDTO.ToStavkeRacunaFromCreateDTO(proizvodId.Value, zaglavljeRacunaId.Value);
+
             await _stavkeRacunaRepo.CreateAsync(stavkeRacunaModel);
-            return CreatedAtAction(nameof(GetById), new { id = stavkeRacunaModel.StavkaId }, stavkeRacunaModel.ToStavkeRacunaDTO());
+
+            return CreatedAtAction(nameof(GetById), new { id = stavkeRacunaModel.StavkaId }, stavkeRacunaModel);
         }
 
         [HttpPut]

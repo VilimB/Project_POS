@@ -13,9 +13,9 @@ namespace Backend_POS.Models.DbSet
         public decimal IznosPopusta { get; set; }
         public decimal Vrijednost { get; set; }
         public int ProizvodId { get; set; }
-        public Proizvod Proizvod { get; set; }
+        public Proizvod? Proizvod { get; set; }
         public int ZaglavljeId { get; set; }
-        public ZaglavljeRacuna ZaglavljeRacuna { get; set; }
+        public ZaglavljeRacuna? ZaglavljeRacuna { get; set; }
 
         
     }

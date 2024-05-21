@@ -123,9 +123,12 @@ C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Backend_PO
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Backend_POS.pdb
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Humanizer.dll
+C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
@@ -142,10 +145,14 @@ C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Mono.TextTemplating.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\MySqlConnector.dll
+C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
@@ -216,6 +223,7 @@ C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\Backend_PO
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\Backend_POS.csproj.CoreCompileInputs.cache
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\Backend_POS.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\Backend_POS.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\Backend_POS.sourcelink.json
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\staticwebassets\msbuild.Backend_POS.Microsoft.AspNetCore.StaticWebAssets.props
@@ -230,11 +238,3 @@ C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\refint\Bac
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\Backend_POS.pdb
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\Backend_POS.genruntimeconfig.cache
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\ref\Backend_POS.dll
-C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\Backend_POS.sourcelink.json
-C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
-C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
-C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Newtonsoft.Json.dll
-C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
-C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
-C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
