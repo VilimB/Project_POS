@@ -29,8 +29,8 @@
         <div class="form-group">
           <label>Naziv Kupca</label>
           <span class="text-danger"></span>
-          <select formControlName="nazivKupac" (change)="customerChange()" class="form-control">
-            <option *ngFor="let item of masterCustomer" [value]="item.id">
+          <select #user formControlName="nazivKupac" (ngModel)="selectedUser" (change)="customerChange(user.value)" class="form-control">
+            <option *ngFor="let item of masterCustomer" [value]="item.kupacId">
               {{item.nazivKupac}}
             </option>
           </select>

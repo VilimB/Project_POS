@@ -11,7 +11,7 @@ export class AddCategoryComponent {
   model = {
       sifraProizvod: '',
       nazivProizvod: '',
-      jedinicaMjere: 1,
+      jedinicaMjere: '',
       cijenaProizvod: 1,
       stanje: 1,
   };

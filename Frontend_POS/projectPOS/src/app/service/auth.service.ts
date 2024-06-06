@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-    return this.http.post<any>(`${this.apiUrl}/login`, { username, password })
+    return this.http.post<any>(`${this.apiUrl}/account/login`, { username, password })
       .pipe(map(response => {
         if (response.token) {
           localStorage.setItem('token', response.token);
@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   register(username: string, email: string, password: string) {
-    return this.http.post<any>(`${this.apiUrl}/register`, { username, email, password })
+    return this.http.post<any>(`${this.apiUrl}/account/register`, { username, email, password })
       .pipe(map(response => {
         if (response.token) {
           localStorage.setItem('token', response.token);
@@ -46,7 +46,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
-    this.tokenSubject.next(''); // Proslijedite prazan string umjesto null
+    this.tokenSubject.next('');
     this.router.navigate(['/login']);
   }
 }

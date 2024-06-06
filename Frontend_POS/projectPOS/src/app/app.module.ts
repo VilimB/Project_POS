@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/login/login.component';
+import { RegistrationComponent } from './features/registration/registration.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { LoginComponent } from './features/login/login.component';
     AddInvoiceComponent,
     HomeComponent,
     LoginComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,

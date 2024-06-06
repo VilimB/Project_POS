@@ -6,6 +6,7 @@ import { InvoiceListComponent } from './features/invoice/invoice-list/invoice-li
 import { AddInvoiceComponent } from './features/invoice/add-invoice/add-invoice.component';
 import { LoginComponent } from './features/login/login.component';
 import { HomeComponent } from './features/home/home.component';
+import { RegistrationComponent } from './features/registration/registration.component';
 
 
 const routes: Routes = [
@@ -33,6 +34,10 @@ const routes: Routes = [
     path:'login',
       component:LoginComponent
     },
+    {
+    path: 'register', // Add this route for the registration component
+    component: RegistrationComponent
+  },
     {
       path:'',
         component:HomeComponent
