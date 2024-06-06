@@ -28,8 +28,8 @@ namespace Backend_POS.Mappers
                 Broj = zaglavljeRacunaDTO.Broj,
                 Datum = zaglavljeRacunaDTO.Datum,
                 Napomena = zaglavljeRacunaDTO.Napomena,
-                KupacId= zaglavljeRacunaDTO .KupacId,
-                
+                KupacId = zaglavljeRacunaDTO.KupacId,
+
             };
         }
     }
