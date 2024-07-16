@@ -25,7 +25,7 @@ namespace Backend_POS.Controllers
         public async Task<IActionResult> GetAll()
         {
             var proizvod = await _proizvodRepo.GetAllAsync();
-            var proizvodDTO= proizvod.Select(s => s.ToProizvodDTO());
+            var proizvodDTO = proizvod.Select(s => s.ToProizvodDTO());
             return Ok(proizvod);
         }
 
@@ -45,9 +45,9 @@ namespace Backend_POS.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateProizvodRequestDTO proizvodDTO)
         {
-            var proizvodModel= proizvodDTO.ToProizvodFromCreateDTO();
+            var proizvodModel = proizvodDTO.ToProizvodFromCreateDTO();
             await _proizvodRepo.CreateAsync(proizvodModel);
-            return CreatedAtAction(nameof(GetById), new {id = proizvodModel.ProizvodId}, proizvodModel.ToProizvodDTO());
+            return CreatedAtAction(nameof(GetById), new { id = proizvodModel.ProizvodId }, proizvodModel.ToProizvodDTO());
         }
 
         [HttpPut]
@@ -55,15 +55,15 @@ namespace Backend_POS.Controllers
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateProizvodRequestDTO updateDTO)
         {
             var proizvodModel = await _proizvodRepo.UpdateAsync(id, updateDTO);
-            
+
             if (proizvodModel == null)
             {
                 return NotFound();
             }
-            
+
             return Ok(proizvodModel.ToProizvodDTO());
-            }
-            
+        }
+
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)

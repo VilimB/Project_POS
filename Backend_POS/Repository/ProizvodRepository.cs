@@ -19,9 +19,23 @@ namespace Backend_POS.Repository
             return await _context.Proizvod.Include(c => c.StavkeRacunas).ToListAsync();
         }
 
-        public async Task<Proizvod> GetByIdAsync(int id)
+        /*public async Task<Proizvod> GetByIdAsync(int id)
         {
             return await _context.Proizvod.Include(c => c.StavkeRacunas).FirstOrDefaultAsync(i => i.ProizvodId == id);
+        }*/
+        public async Task<Proizvod> GetByIdAsync(int id)
+        {
+            var proizvod = await _context.Proizvod
+                .Include(c => c.StavkeRacunas)
+                .FirstOrDefaultAsync(i => i.ProizvodId == id);
+
+            if (proizvod == null)
+            {
+             
+                throw new ArgumentException($"Proizvod with id {id} not found.");
+            }
+
+            return proizvod;
         }
 
         public async Task<Proizvod> UpdateAsync(int id, UpdateProizvodRequestDTO proizvodDTO)

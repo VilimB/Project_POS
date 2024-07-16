@@ -1,4 +1,5 @@
-﻿using Backend_POS.Data;
+﻿
+using Backend_POS.Data;
 using Backend_POS.Interfaces;
 using Backend_POS.Mappers;
 using Backend_POS.Models.DbSet;

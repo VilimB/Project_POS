@@ -26,6 +26,7 @@ namespace Backend_POS.Mappers
         {
             return new Proizvod
             {
+
                 SifraProizvod = proizvodDTO.SifraProizvod,
                 NazivProizvod = proizvodDTO.NazivProizvod,
                 JedinicaMjere = proizvodDTO.JedinicaMjere,
@@ -35,3 +36,5 @@ namespace Backend_POS.Mappers
         }
     }
 }
+
+
