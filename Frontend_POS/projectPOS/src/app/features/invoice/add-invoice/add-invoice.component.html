@@ -40,7 +40,7 @@
         <div class="form-group">
           <label>Šifra Kupca</label>
           <span class="text-danger"></span>
-          <input formControlName="sifraKupac" class="form-control" />
+          <input formControlName="sifracKupac" class="form-control" />
         </div>
       </div>
       <div class="col-lg-6">
@@ -79,8 +79,8 @@
               <tr [formGroupName]="i">
                 <td>{{i+1}}</td>
                 <td>
-                  <select formControlName="nazivProizvod" (change)="productChange(i)" class="form-control">
-                    <option *ngFor="let item of masterProduct" [value]="item.id">
+                  <select formControlName="nazivProizvod" #proizvod (change)="productChange(proizvod.value, i)" class="form-control">
+                    <option *ngFor="let item of masterProduct" [value]="item.proizvodId">
                       {{item.nazivProizvod}}
                     </option>
                   </select>

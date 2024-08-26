@@ -53,4 +53,8 @@ saveInvoice(invoiceData: any) {
   return this.http.post("http://localhost:5045/api/StavkeRacuna", invoiceData);
 }
 
+saveZaglavlje(invoiceData: any, kupacId: any){
+  return this.http.post("http://localhost:5045/api/ZaglavljeRacuna/"+ kupacId, invoiceData);
+}
+
 }

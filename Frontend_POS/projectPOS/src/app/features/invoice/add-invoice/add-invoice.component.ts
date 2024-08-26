@@ -19,6 +19,8 @@ export class AddInvoiceComponent implements OnInit {
   masterProduct:any;
   isedit = false;
   selectedUser:any;
+  userId: any;
+  selectedProductId:string | undefined;
 
   constructor(private builder: FormBuilder, private service:MasterService, private router:Router,private alert: MasterService) { }
 
@@ -30,7 +32,7 @@ export class AddInvoiceComponent implements OnInit {
       mjesto:this.builder.control(''),
       datum: '',
       napomena: '',
-      sifraKupac: '',
+      sifracKupac: '',
       proizvodip: this.builder.array([]),
       popust: { value: 0, disabled: false },
       iznosPopusta: { value: 0, disabled: true },
@@ -55,21 +57,26 @@ export class AddInvoiceComponent implements OnInit {
   customerChange(value: any){
     console.log(value)
     let customercode= value;
+    console.log(this.selectedUser)
     this.service.GetCustomercbycode(customercode).subscribe(res=>{
       let custdata: any;
       custdata=res;
       if(custdata!=null){
+        this.userId = custdata.kupacId
         this.invoiceform.get("adresa")?.setValue(custdata.adresa)
-        this.invoiceform.get("sifraKupac")?.setValue(custdata.sifraKupac)
+        this.invoiceform.get("sifracKupac")?.setValue(custdata.sifraKupac)
         this.invoiceform.get("mjesto")?.setValue(custdata.mjesto)
       }
     });
   }
-  productChange(index:any){
-    console.log(index)
+  /*productChange(index:any){
+    console.log("index: " + index)
     this.proizvodip = this.invoiceform.get('proizvodip') as FormArray;
+    console.log("this.proizvodip: " + this.proizvodip)
     this.invoiceproduct=this.proizvodip.at(index) as FormGroup;
     let productcode= this.invoiceproduct.get("nazivProizvod")?.value;
+    console.log("this.productcode: " + productcode)
+
     this.service.GetProductbycode(productcode).subscribe(res=>{
       let productcode: any;
       productcode=res;
@@ -82,14 +89,50 @@ export class AddInvoiceComponent implements OnInit {
 
       }
     });
-  }
+  }*/
+    productChange(event: any,index: any) {
+      this.proizvodip = this.invoiceform.get('proizvodip') as FormArray;
+      // this.invoiceproduct = this.proizvodip.at(index) as FormGroup;
+      // console.log(this.masterProduct);
+      // Retrieve the selected value from the dropdown
+      // let selectedValue = this.invoiceproduct.get("nazivProizvod")?.value;
+      let selectedValue = event;
+      // Log the selected value to the console
+      console.log('Selected Naziv Proizvod:', selectedValue);
+
+      // Proceed with your logic
+      if (selectedValue) {
+        this.service.GetProductbycode(selectedValue).subscribe((res:any) => {
+          if (res) {
+            this.proizvodip.controls[index].get("sifraProizvod")?.setValue(res.sifraProizvod);
+            this.proizvodip.controls[index].get("kolicina")?.setValue(res.kolicina);
+            this.proizvodip.controls[index].get("cijenaProizvod")?.setValue(res.cijenaProizvod);
+            this.proizvodip.controls[index].get("stanje")?.setValue(res.stanje);
+            // this.invoiceform.get("proizvodip")?.setValue(this.proizvodip);
+            // this.proizvodip.get("sifraProizvod")?.setValue(res.sifraProizvod);
+            // this.proizvodip.get("kolicina")?.setValue(res.kolicina);
+            // this.proizvodip.get("cijenaProizvod")?.setValue(res.cijenaProizvod);
+            // this.proizvodip.get("stanje")?.setValue(res.stanje);
+            // this.invoiceproduct.get("sifraProizvod")?.setValue(res.sifraProizvod);
+            // this.invoiceproduct.get("kolicina")?.setValue(res.kolicina);
+            // this.invoiceproduct.get("cijenaProizvod")?.setValue(res.cijenaProizvod);
+            // this.invoiceproduct.get("stanje")?.setValue(res.stanje);
+            // this.Itemcalcyulation(index);
+          }
+        });
+      } else {
+        console.error('Naziv Proizvod is undefined or invalid');
+      }
+    }
+
   SaveInvoice() {
     if (this.invoiceform.valid) {
+      this.service.saveZaglavlje(this.invoiceform.getRawValue(), this.userId).subscribe( res => {
       this.service.saveInvoice(this.invoiceform.getRawValue()).subscribe(res=>{
         let result:any;
         result=res;
         console.log(result);
-      })
+      })})
       } else {
       this.alert.warning('Please enter values in all mandatory filed', 'Validation');
     }
@@ -115,6 +158,8 @@ export class AddInvoiceComponent implements OnInit {
     let kolicina= this.invoiceproduct.get("kolicina")?.value;
     let cijenaProizvod= this.invoiceproduct.get("cijenaProizvod")?.value;
     let cijenaStavka=kolicina*cijenaProizvod;
+    this.proizvodip.at(index).get("cijenaStavka")?.setValue(cijenaStavka);
+    console.log(cijenaStavka);
     this.invoiceproduct.get("cijenaStavke")?.setValue(cijenaStavka);
     this.summaryCalculation();
 
