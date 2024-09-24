@@ -1,0 +1,35 @@
+/* home.component.css */
+.p-4 {
+  padding: 4rem;
+}
+
+.bg-light {
+  background-color: #f8f9fa !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+h1.display-4 {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+p.lead {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+p a.btn {
+  font-size: 0.6rem;
+}

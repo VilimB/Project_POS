@@ -1,23 +1,24 @@
+<link ref="stylesheet" href="login.component.css">
 <div class="container">
-  <h1 class="text-center mt-5 mb-4">Login</h1>
+  <h1 class="text-center mt-5 mb-4">Prijava</h1>
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
           <form (ngSubmit)="login()">
-            <!-- Email input -->
+
             <div class="mb-4">
-              <label class="form-label" for="form2Example1">User Name</label>
+              <label class="form-label" for="form2Example1">Korisničko ime</label>
               <input type="email" id="form2Example1" class="form-control" [(ngModel)]="username" name="username" required />
             </div>
 
-            <!-- Password input -->
+
             <div class="mb-4">
-              <label class="form-label" for="form2Example2">Password</label>
+              <label class="form-label" for="form2Example2">Lozinka</label>
               <input type="password" id="form2Example2" class="form-control" [(ngModel)]="password" name="password" required />
             </div>
 
-            <!-- Checkbox and Forgot password link -->
+
             <div class="row mb-4">
               <div class="col">
                 <div class="form-check">
@@ -28,7 +29,7 @@
             </div>
 
             <div class="text-center mb-4">
-              <button type="submit" class="btn btn-primary">Login</button>
+              <button type="submit" class="btn btn-primary"> <i class="fa fa-sign-in" aria-hidden="true"></i> Prijavi se</button>
             </div>
 
             <div *ngIf="errorMessage" class="alert alert-danger text-center">
@@ -38,10 +39,10 @@
             <div class="text-center">
               <p>Nemaš registraciju? <a href="/register" class="text-decoration-none">Registracija</a></p>
               <div class="btn-group" role="group">
-                <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-facebook-f"></i></button>
-                <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-google"></i></button>
-                <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-twitter"></i></button>
-                <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-github"></i></button>
+                <button type="button" class="btn btn-link btn-floating mx-1"><i class="fa fa-facebook"></i></button>
+                <button type="button" class="btn btn-link btn-floating mx-1"><i class="fa fa-google"></i></button>
+                <button type="button" class="btn btn-link btn-floating mx-1"><i class="fa fa-twitter"></i></button>
+                <button type="button" class="btn btn-link btn-floating mx-1"><i class="fa fa-github"></i></button>
               </div>
             </div>
           </form>

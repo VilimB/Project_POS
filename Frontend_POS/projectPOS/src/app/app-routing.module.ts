@@ -35,6 +35,15 @@ const routes: Routes = [
       component:LoginComponent
     },
     {
+      path:'dodaj',
+      component:AddCategoryComponent
+    },
+    {
+    path:'dodaj/proizvodi',
+    component:CategoryListComponent
+    },
+
+    {
     path: 'register', // Add this route for the registration component
     component: RegistrationComponent
   },

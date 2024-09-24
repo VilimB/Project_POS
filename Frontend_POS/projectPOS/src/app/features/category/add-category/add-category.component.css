@@ -1,0 +1,43 @@
+
+.form-box {
+  max-width: 500px; /* Maksimalna širina okvira */
+  margin: 0 auto; /* Centriranje okvira na sredini stranice */
+  padding: 10px; /* Unutarnji razmak */
+  border: 1px solid #ccc; /* Dodaj okvir oko cijelog sadržaja */
+  border-radius: 8px; /* Zaobljeni rubovi okvira */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Dodaj sjenu ispod okvira */
+  background-color: #f9f9f9; /* Lagana pozadina unutar okvira */
+}
+
+/* Smanjivanje dužine input polja */
+.form-control {
+  width: 100%; /* Polja će zauzimati cijelu širinu unutar okvira */
+  max-width: 100%; /* Sprječava prelazak preko ruba */
+}
+
+/* Prostor između input polja */
+.mt-3 {
+  margin-top: 0.5rem; /* Razmak između elemenata */
+}
+
+/* Stilizacija naslova */
+h1 {
+  text-align: center; /* Centriranje naslova */
+  font-size: 1.8rem; /* Veličina naslova */
+  margin-bottom: 1.5rem; /* Razmak ispod naslova */
+}
+
+/* Stilizacija gumba */
+button[type="submit"] {
+  width: 20%; /* Gumb će zauzeti cijelu širinu */
+  padding: 10px; /* Unutarnji razmak */
+  font-size: 0.9rem; /* Veličina fonta */
+  margin-top: 1rem; /* Razmak iznad gumba */
+}
+
+/* Stilizacija labela */
+label {
+ /* font-weight: bold;  Podebljani tekst */
+  margin-bottom: 0.5rem; /* Razmak ispod labela */
+  display: inline-block; /* Osigurava da label zauzima cijeli red */
+}

@@ -1,0 +1,21 @@
+.flex {
+  display: flex;
+}
+
+.gap5 {
+  gap: 5px;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.nav-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+  color: inherit;
+  display: flex;
+  align-items: center;
+}
