@@ -9,11 +9,11 @@ import { HttpClient } from '@angular/common/http';
 export class AddCategoryComponent {
 
   model = {
-      sifraProizvod: '',
-      nazivProizvod: '',
-      jedinicaMjere: '',
-      cijenaProizvod: 1,
-      stanje: 1,
+    sifraProizvod: '',
+    nazivProizvod: '',
+    jedinicaMjere: '',
+    cijenaProizvod: '',
+    stanje: 1,
   };
 
   constructor(private http: HttpClient) {}
@@ -21,11 +21,17 @@ export class AddCategoryComponent {
   onFormSubmit() {
     this.http.post<any>('http://localhost:5045/api/Proizvod', this.model).subscribe(
       response => {
-
         console.log('Uspješno dodan proizvod:', response);
+
+        this.model = {
+          sifraProizvod: '',
+          nazivProizvod: '',
+          jedinicaMjere: '',
+          cijenaProizvod: '',
+          stanje: 1,
+        };
       },
       error => {
-
         console.error('Greška prilikom dodavanja proizvoda:', error);
       }
     );

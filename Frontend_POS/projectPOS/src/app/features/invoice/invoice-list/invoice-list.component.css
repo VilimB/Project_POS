@@ -1,0 +1,46 @@
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  background-color: #ffffff; /* Postavljamo pozadinsku boju na belu */
+}
+
+.table th, .table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.btn-action {
+  /* Definiši osnovne stilove za gumbove */
+  background-color: #007bff; /* Plava boja */
+  color: white; /* Boja teksta */
+  border: none; /* Bez okvira */
+  border-radius: 4px; /* Blago zaobljeni uglovi */
+  padding: 10px 15px; /* Unutrašnji razmak */
+  margin-right: 10px; /* Razmak između gumba */
+  cursor: pointer; /* Kursor kao ruka na hover */
+  transition: background-color 0.3s; /* Animacija prilikom hovera */
+}
+
+.btn-action:hover {
+  background-color: #0056b3; /* Tamnija plava na hover */
+}
+
+.btn-danger {
+  background-color: #dc3545; /* Crvena boja za brisanje */
+}
+
+.btn-danger:hover {
+  background-color: #c82333; /* Tamnija crvena na hover */
+}
+
+.card {
+  margin: auto; /* Centriranje kartice */
+  border-radius: 10px; /* Blago zaobljeni uglovi kartice */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Blagi senka kartice */
+}
+
+.card-header {
+  background-color: #f8f9fa; /* Svetla pozadina za header */
+  font-weight: bold; /* Podebljano za header */
+}

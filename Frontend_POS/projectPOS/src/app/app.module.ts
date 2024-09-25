@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './core/components/navbar/navbar.component';
-import { CategoryListComponent } from './features/category/category-list/category-list.component';
 import { AddCategoryComponent } from './features/category/add-category/add-category.component';
-
 import { InvoiceListComponent } from './features/invoice/invoice-list/invoice-list.component';
 import { AddInvoiceComponent } from './features/invoice/add-invoice/add-invoice.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,19 +12,19 @@ import { ToastrModule } from 'ngx-toastr';
 import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/login/login.component';
 import { RegistrationComponent } from './features/registration/registration.component';
-
-
+import { MasterService } from './service/master.service';
+import { CategoryListComponent } from './features/category/category-list/category-list.component';
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    CategoryListComponent,
     AddCategoryComponent,
     InvoiceListComponent,
     AddInvoiceComponent,
     HomeComponent,
     LoginComponent,
     RegistrationComponent,
+    CategoryListComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,12 +33,12 @@ import { RegistrationComponent } from './features/registration/registration.comp
     ReactiveFormsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-
   ],
-  providers: [],
+  providers: [MasterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
 /*import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';

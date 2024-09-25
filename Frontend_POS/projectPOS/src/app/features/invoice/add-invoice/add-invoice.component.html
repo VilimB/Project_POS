@@ -1,8 +1,8 @@
+<link ref="stylesheet" href="add-invoice.component.css">
 <form class="container" [formGroup]="invoiceform" (ngSubmit)="SaveInvoice()">
-  <h3>{{pagetitle}}</h3>
+  <h2>Dodaj račun</h2>
 
-  <div class="card-body">
-
+  <div class="account-section">
     <div class="row">
       <div class="col-lg-6">
         <div class="form-group">
@@ -25,6 +25,11 @@
           <input formControlName="napomena" class="form-control" />
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="customer-section">
+    <div class="row">
       <div class="col-lg-6">
         <div class="form-group">
           <label>Naziv Kupca</label>
@@ -58,7 +63,9 @@
         </div>
       </div>
     </div>
+  </div>
 
+  <div class="product-section">
     <div class="row">
       <div class="col-lg-12">
         <table class="table table-bordered">
@@ -98,7 +105,7 @@
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="6">
+              <td colspan="8">
                 <button type="button" class="btn btn-success" (click)="addnewproduct()">[+]</button>
               </td>
             </tr>
@@ -128,7 +135,7 @@
       </div>
       <div class="col-lg-12">
         <br>
-        <button class="btn btn-success" type="submit" [disabled]="!invoiceform.valid">Save</button>
+        <button class="btn btn-success" type="submit" [disabled]="!invoiceform.valid">Spremi</button>
       </div>
     </div>
   </div>

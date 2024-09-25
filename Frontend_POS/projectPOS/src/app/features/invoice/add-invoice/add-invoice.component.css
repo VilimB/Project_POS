@@ -1,0 +1,44 @@
+/* Stil za tabelu proizvoda i izračune */
+.product-section {
+  background-color: #e9f7ef; /* Svetlozelena pozadina za deo s artiklima */
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px; /* Razmak između sekcija */
+}
+
+
+/* Stil za dugmad */
+.btn-success {
+  margin-top: 20px; /* Razmak od ostalih elemenata */
+}
+
+.container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f8f9fa; /* Svetla pozadina */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Stil za odeljak sa brojem računa, datumom i napomenom */
+.account-section {
+  background-color: #e9ecef; /* Pozadina za prvi deo */
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px; /* Razmak između sekcija */
+}
+
+/* Stil za odeljak sa podacima o kupcu */
+.customer-section {
+  background-color: #e9ecef; /* Pozadina za drugi deo */
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px; /* Razmak između sekcija */
+}
+
+/* Stil za tabelu */
+.table {
+  margin-top: 20px;
+}
+
+

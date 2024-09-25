@@ -1,40 +1,40 @@
-<div class="card" style="width: 1200px">
-  <h3>Listing Invoice</h3>
-  <div class="card-header">
-      <a class="btn btn-success" routerLink="kasa">Create New [+]</a>
-  </div>
-  <div class="card-body">
-
-      <table class="table table-bordered">
-          <thead class="bg-dark text-white">
-              <tr>
-                  <td>Broj Računa</td>
-                  <td>Ime Kupca</td>
-                  <td>Napomena</td>
-                  <td>Popust</td>
-                  <td>Iznos Popusta</td>
-                  <td>Vrijednost</td>
-                  <td>Uredi</td>
-              </tr>
-          </thead>
-          <tbody>
-<tr *ngFor="let item of Invoiceheader">
-  <td>{{item.broj}}</td>
-  <td>{{item.nazivProizvod}}</td>
-  <td>{{item.kolicina}}</td>
-  <td>{{item.popust | currency}}</td>
-  <td>{{item.iznosPopusta | currency}}</td>
-  <td>{{item.vrijednost | currency}}</td>
-  <td>
-    <a class="btn btn-primary">Uredi</a> / <a class="btn btn-danger">Izbriši</a>
-  </td>
-
-</tr>
-          </tbody>
-
+<link rel="stylesheet" href="invoice-list.component.css">
+<div class="container mt-4">
+  <div class="card" style="width: 1200px">
+    <h3 class="card-header">Lista Računa</h3>
+    <div class="d-flex justify-content-end mt-3">
+      <a class="btn btn-success" routerLink="kasa">Dodaj Račun [+]</a>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered table-hover mt-3">
+        <thead class="thead-light">
+          <tr class="bg-dark text-white">
+            <th>Broj Računa</th>
+            <th>Ime Kupca</th>
+            <th>Napomena</th>
+            <th>Popust</th>
+            <th>Iznos Popusta</th>
+            <th>Vrijednost</th>
+            <th>Uredi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of Invoiceheader">
+            <td>{{item.broj}}</td>
+            <td>{{item.nazivKupac}}</td>
+            <td>{{item.napomena}}</td>
+            <td>{{item.popust | currency}}</td>
+            <td>{{item.iznosPopusta | currency}}</td>
+            <td>{{item.vrijednost | currency}}</td>
+            <td>
+              <a class="btn btn-primary btn-action">Uredi</a>
+              <a class="btn btn-danger btn-action">Izbriši</a>
+            </td>
+          </tr>
+        </tbody>
       </table>
-
+    </div>
   </div>
-
 </div>
+
 

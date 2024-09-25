@@ -1,9 +1,38 @@
-<div class="container">
-
+<link rel="stylesheet" href="category-list.component.css">
+<div class="container mt-4">
   <h1 class="mt-3">Lista proizvoda</h1>
 
   <div class="d-flex justify-content-end mt-3">
-    <a routerLink="/proizvodi/dodaj" class="btn btn-primary">Dodaj Artikal</a>
+    <a [routerLink]="['/dodaj']" class="btn btn-primary">Dodaj Artikal</a>
   </div>
 
+  <table class="table table-bordered table-hover mt-3">
+    <thead class="thead-light">
+      <tr>
+        <th>Šifra Proizvoda</th>
+        <th>Naziv Proizvoda</th>
+        <th>Jedinica Mjere</th>
+        <th>Cijena</th>
+        <th>Stanje</th>
+        <th>Novo stanje</th> <!-- Novi stupac za novo stanje -->
+        <th>Akcije</th> <!-- Nova kolona za akcije -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.sifraProizvod }}</td>
+        <td>{{ product.nazivProizvod }}</td>
+        <td>{{ product.jedinicaMjere }}</td>
+        <td>{{ product.cijenaProizvod | currency:'KM' }}</td>
+        <td>{{ product.stanje }}</td>
+        <td>
+          <input [(ngModel)]="product.novoStanje" type="number" placeholder="Novo stanje" class="form-control mb-2" /> <!-- Input za novo stanje -->
+        </td>
+        <td>
+          <button (click)="azurirajStanje(product)" class="btn-action">Promijeni Stanje</button>
+          <button (click)="deleteProduct(product.proizvodId)" class="btn-action btn-danger">Izbriši</button> <!-- Gumb za brisanje -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
