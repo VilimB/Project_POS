@@ -59,10 +59,23 @@ export class MasterService {
   RemoveInvoice(invoiceno: any): Observable<any> {
     return this.http.delete("http://localhost:5045/api/StavkeRacuna/" + invoiceno);
   }
-
-  saveInvoice(invoiceData: any): Observable<any> {
-    return this.http.post("http://localhost:5045/api/StavkeRacuna", invoiceData);
+  DeleteInvoice(id: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:5045/api/StavkeRacuna/${id}`);
   }
+
+  /*saveInvoice(invoiceData: any): Observable<any> {
+    return this.http.post("http://localhost:5045/api/StavkeRacuna", invoiceData);
+  }*/
+    saveInvoice(broj: any, nazivProizvod: string, invoiceData: any): Observable<any> {
+
+      invoiceData.broj = broj;
+      invoiceData.nazivProizvod = nazivProizvod;
+
+
+      return this.http.post("http://localhost:5045/api/StavkeRacuna", invoiceData);
+  }
+
+
 
   saveZaglavlje(invoiceData: any, kupacId: any): Observable<any> {
     return this.http.post("http://localhost:5045/api/ZaglavljeRacuna/" + kupacId, invoiceData);

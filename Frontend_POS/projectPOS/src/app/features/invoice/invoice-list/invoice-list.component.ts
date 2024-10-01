@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
   styleUrl: './invoice-list.component.css'
 })
 export class InvoiceListComponent {
+  masterService: any;
 
   constructor(private service: MasterService, private toastr: ToastrService) { }
 
@@ -20,7 +21,18 @@ export class InvoiceListComponent {
 
     }
 
-
+    deleteInvoice(stavkaId: number) {
+      if (confirm('Da li ste sigurni da želite obrisati ovaj proizvod?')) {
+        this.masterService.DeleteInvoice(stavkaId).subscribe(
+          () => {
+            this.LoadInvoice();
+          },
+          (error: any) => {
+            console.error('Greška prilikom brisanja proizvoda:', error);
+          }
+        );
+      }
+    }
 
     LoadInvoice() {
       this.service.GetAllInvoice().subscribe(

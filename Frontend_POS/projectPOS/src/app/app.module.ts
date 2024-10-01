@@ -7,7 +7,7 @@ import { NavbarComponent } from './core/components/navbar/navbar.component';
 import { AddCategoryComponent } from './features/category/add-category/add-category.component';
 import { InvoiceListComponent } from './features/invoice/invoice-list/invoice-list.component';
 import { AddInvoiceComponent } from './features/invoice/add-invoice/add-invoice.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/login/login.component';
@@ -34,7 +34,10 @@ import { CategoryListComponent } from './features/category/category-list/categor
     HttpClientModule,
     ToastrModule.forRoot(),
   ],
-  providers: [MasterService],
+  providers: [
+    MasterService,
+    provideHttpClient(withFetch())
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

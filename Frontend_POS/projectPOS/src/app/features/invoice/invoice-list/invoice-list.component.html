@@ -23,12 +23,13 @@
             <td>{{item.broj}}</td>
             <td>{{item.nazivKupac}}</td>
             <td>{{item.napomena}}</td>
-            <td>{{item.popust | currency}}</td>
+            <td>{{item.popust | percent}}</td>
             <td>{{item.iznosPopusta | currency}}</td>
-            <td>{{item.vrijednost | currency}}</td>
+            <td>{{item.vrijednost | currency:'KM'}}</td>
             <td>
               <a class="btn btn-primary btn-action">Uredi</a>
-              <a class="btn btn-danger btn-action">Izbriši</a>
+
+              <button (click)="deleteInvoice(item.stavkaId)" class="btn-action btn-danger">Izbriši</button>
             </td>
           </tr>
         </tbody>
