@@ -5,8 +5,8 @@ namespace Backend_POS.Models.DbSet
     public class StavkeRacuna
     {
         [Key]
-        public int StavkaId { get; set; } 
-       
+        public int StavkaId { get; set; }
+
         public int Kolicina { get; set; }
         public decimal CijenaStavka { get; set; }
         public decimal Popust { get; set; }
@@ -16,8 +16,8 @@ namespace Backend_POS.Models.DbSet
         public Proizvod? Proizvod { get; set; }
         public int ZaglavljeId { get; set; }
         public ZaglavljeRacuna? ZaglavljeRacuna { get; set; }
-        public string Naziv { get; set; } = string.Empty;
         public int Broj { get; set; }
+        public string NazivProizvod { get; set; } = string.Empty;
 
 
 

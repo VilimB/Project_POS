@@ -4,6 +4,7 @@ using Backend_POS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend_POS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240930180135_NewM")]
+    partial class NewM
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,7 +111,7 @@ namespace Backend_POS.Migrations
                     b.Property<int>("Kolicina")
                         .HasColumnType("int");
 
-                    b.Property<string>("NazivProizvod")
+                    b.Property<string>("Naziv")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -218,9 +221,6 @@ namespace Backend_POS.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("XmlRacun")
-                        .HasColumnType("longtext");
-
                     b.HasKey("ZaglavljeId");
 
                     b.HasIndex("Broj")
@@ -259,13 +259,13 @@ namespace Backend_POS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5b482ea5-7e86-457f-bb2b-466c996fb90c",
+                            Id = "943dc36a-fb78-4f0f-937f-de10738c188d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "e22320bf-7487-4803-967d-926f6659c492",
+                            Id = "3532fe69-e869-40d6-947a-762604b1bf23",
                             Name = "User",
                             NormalizedName = "USER"
                         });

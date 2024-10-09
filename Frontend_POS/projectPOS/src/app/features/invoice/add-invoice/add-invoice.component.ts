@@ -117,34 +117,25 @@ export class AddInvoiceComponent implements OnInit {
 
       }
 
+      SaveInvoice() {
+        if (this.invoiceform.valid) {
+          const broj = this.invoiceform.get('broj')?.value;
 
-
-
-    SaveInvoice() {
-      if (this.invoiceform.valid) {
-        console.log('Odabrani proizvod:', event);
-        console.log('Naziv proizvoda:', this.invoiceform.get('nazivProizvod')?.value);
-        console.log(JSON.stringify(this.invoiceform.getRawValue()));
-
-
-          // Dobijte vrednosti broja i naziva proizvoda
-          const broj = this.invoiceform.get('broj')?.value;  // Pretpostavljam da je 'broj' polje u formi
-          const nazivProizvod = this.invoiceform.get('nazivProizvod')?.value;  // Isto važi za naziv proizvoda
-
-          // Sačuvajte zaglavlje računa
+          // Sačuvaj zaglavlje računa
           this.service.saveZaglavlje(this.invoiceform.getRawValue(), this.userId).subscribe(res => {
-              // Sačuvajte stavke računa koristeći novi signature
-              this.service.saveInvoice(broj, nazivProizvod, this.invoiceform.getRawValue()).subscribe(res => {
-                  let result: any = res;
-                  console.log(result);
-                  this.toastr.success('Račun je uspješno sačuvan!');
-                  this.updateStock(); // Ažuriraj stanje proizvoda putem SignalR-a
-              });
+            this.toastr.success('Račun je uspješno sačuvan!');
+
+            // Nakon uspješnog spremanja pozovemo API za generiranje e-računa
+            this.service.generateERacun(broj).subscribe(res => {
+              this.toastr.success('E-račun je uspješno generiran!');
+              this.updateStock(); // Ažuriraj stanje proizvoda putem SignalR-a
+            });
           });
-      } else {
+        } else {
           this.toastr.warning('Unesite sve obavezne podatke!', 'Validacija');
+        }
       }
-  }
+
 
 
   updateStock() {

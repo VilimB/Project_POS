@@ -4,6 +4,7 @@ using Backend_POS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend_POS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241009113246_MigrationsNeww")]
+    partial class MigrationsNeww
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -259,13 +262,13 @@ namespace Backend_POS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5b482ea5-7e86-457f-bb2b-466c996fb90c",
+                            Id = "b86f719b-cb7c-45b3-badc-863800828881",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "e22320bf-7487-4803-967d-926f6659c492",
+                            Id = "a721193f-cbdc-4c76-8348-4a4e03c6f134",
                             Name = "User",
                             NormalizedName = "USER"
                         });

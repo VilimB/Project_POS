@@ -19,6 +19,9 @@ namespace Backend_POS.Mappers
                 Vrijednost = stavkeRacunaModel.Vrijednost,
                 ProizvodId = stavkeRacunaModel.ProizvodId,
                 ZaglavljeId = stavkeRacunaModel.ZaglavljeId,
+                Broj= stavkeRacunaModel.Broj,
+                NazivProizvod = stavkeRacunaModel.NazivProizvod,
+
 
             };
 
@@ -32,8 +35,11 @@ namespace Backend_POS.Mappers
                 Popust = stavkeRacunaDTO.Popust,
                 IznosPopusta = stavkeRacunaDTO.IznosPopusta,
                 Vrijednost = stavkeRacunaDTO.Vrijednost,
-                ProizvodId = proizvodId,
-                ZaglavljeId = zaglavljeRacunaId,
+                ProizvodId = stavkeRacunaDTO.ProizvodId,
+                ZaglavljeId = stavkeRacunaDTO.ZaglavljeId,
+                Broj = stavkeRacunaDTO.Broj,
+                NazivProizvod = stavkeRacunaDTO.NazivProizvod,
+
 
             };
         }

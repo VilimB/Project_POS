@@ -14,6 +14,9 @@ import { LoginComponent } from './features/login/login.component';
 import { RegistrationComponent } from './features/registration/registration.component';
 import { MasterService } from './service/master.service';
 import { CategoryListComponent } from './features/category/category-list/category-list.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,8 +34,10 @@ import { CategoryListComponent } from './features/category/category-list/categor
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [
     MasterService,

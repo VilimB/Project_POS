@@ -7,9 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Backend_POS.Service;
+// Dodaj ovo za servis koji æeš kreirati
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddSignalR(); // Dodaj SignalR usluge
 
 builder.Services.AddControllers();
 // Saznajte više o konfiguriranju Swagger/OpenAPI na https://aka.ms/aspnetcore/swashbuckle
@@ -22,7 +24,9 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 });
 
 var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
-builder.Services.AddDbContext<DataContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddDbContext<DataContext>(options => options.UseMySql(connectionString,
+    ServerVersion.AutoDetect(connectionString)));
+
 builder.Services.AddIdentity<User, IdentityRole>(options => {
     options.Password.RequiredLength = 5;
 })
@@ -48,11 +52,17 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
+
+// Registracija repozitorija i servisa
 builder.Services.AddScoped<IProizvodRepository, ProizvodRepository>();
 builder.Services.AddScoped<IKupacRepository, KupacRepository>();
 builder.Services.AddScoped<IStavkeRacunaRepository, StavkeRacunaRepository>();
 builder.Services.AddScoped<IZaglavljeRacunaRepository, ZaglavljeRacunaRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+
+// **Dodaj ovu liniju za novi RacunService**
+builder.Services.AddScoped<RacunService>();  // Registriraj RacunService
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
@@ -60,6 +70,7 @@ builder.Services.AddCors(options =>
                           .AllowAnyMethod()
                           .AllowAnyHeader());
 });
+
 var app = builder.Build();
 
 
@@ -76,21 +87,19 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-
 app.MapControllers();
 
+app.MapHub<NotificationHub>("/notificationHub");
+
 app.Run();
-
-
-

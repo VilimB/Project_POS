@@ -6,5 +6,6 @@
         public DateTime Datum { get; set; } = DateTime.Now;
         public string Napomena { get; set; } = string.Empty;
         public int KupacId { get; set; }
+        public string? XmlRacun { get; set; }
     }
 }

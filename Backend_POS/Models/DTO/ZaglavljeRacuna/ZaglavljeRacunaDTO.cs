@@ -10,6 +10,6 @@ namespace Backend_POS.Models.DTO.ZaglavljeRacuna
         public string Napomena { get; set; } = string.Empty;
         public int KupacId { get; set; }
         public List<StavkeRacunaDTO>? StavkeRacunas { get; set; }
-
+        public string? XmlRacun { get; set; }
     }
 }

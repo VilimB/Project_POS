@@ -53,7 +53,7 @@ namespace Backend_POS.Controllers
             {
                 return BadRequest("Kupac ne postoji");
             }
-
+            zaglavljeRacunaDTO.KupacId = kupacId;
             var zaglavljeRacunaModel = zaglavljeRacunaDTO.ToZaglavljeRacunaFromCreateDTO(kupacId);
             await _zaglavljeRacunaRepo.CreateAsync(zaglavljeRacunaModel);
             return CreatedAtAction(nameof(GetById), new { id = zaglavljeRacunaModel.ZaglavljeId }, zaglavljeRacunaModel.ToZaglavljeRacunaDTO());

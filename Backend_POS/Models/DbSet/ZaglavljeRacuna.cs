@@ -15,8 +15,10 @@ namespace Backend_POS.Models.DbSet
         public int KupacId { get; set; }
         
         public Kupac? Kupac { get; set; }
+        public string? XmlRacun { get; set; }
 
-       
+
+
 
     }
 

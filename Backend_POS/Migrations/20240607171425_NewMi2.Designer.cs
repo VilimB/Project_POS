@@ -4,6 +4,7 @@ using Backend_POS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend_POS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240607171425_NewMi2")]
+    partial class NewMi2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,9 +99,6 @@ namespace Backend_POS.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("StavkaId"));
 
-                    b.Property<int>("Broj")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("CijenaStavka")
                         .HasColumnType("decimal(65,30)");
 
@@ -107,10 +107,6 @@ namespace Backend_POS.Migrations
 
                     b.Property<int>("Kolicina")
                         .HasColumnType("int");
-
-                    b.Property<string>("NazivProizvod")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<decimal>("Popust")
                         .HasColumnType("decimal(65,30)");
@@ -218,9 +214,6 @@ namespace Backend_POS.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("XmlRacun")
-                        .HasColumnType("longtext");
-
                     b.HasKey("ZaglavljeId");
 
                     b.HasIndex("Broj")
@@ -259,13 +252,13 @@ namespace Backend_POS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5b482ea5-7e86-457f-bb2b-466c996fb90c",
+                            Id = "77e5ee24-b1d3-4e4d-8875-27783071d0fc",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "e22320bf-7487-4803-967d-926f6659c492",
+                            Id = "e1e13ca9-0c20-4fc9-b53d-1fcd4b82bbbe",
                             Name = "User",
                             NormalizedName = "USER"
                         });

@@ -9,6 +9,7 @@ using Backend_POS.Models.DTO.StavkeRacuna;
 using Backend_POS.Models.DTO.ZaglavljeRacuna;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend_POS.Controllers
@@ -21,13 +22,15 @@ namespace Backend_POS.Controllers
         private readonly IStavkeRacunaRepository _stavkeRacunaRepo;
         private readonly IZaglavljeRacunaRepository _zaglavljeRacunaRepo;
         private readonly IProizvodRepository _proizvodRepo;
+        private readonly IHubContext<NotificationHub> _hubContext;
 
-        public StavkeRacunaController(DataContext context, IStavkeRacunaRepository stavkeRacunaRepo, IZaglavljeRacunaRepository zaglavljeRacunaRepo, IProizvodRepository proizvodRepo)
+        public StavkeRacunaController(DataContext context, IStavkeRacunaRepository stavkeRacunaRepo, IZaglavljeRacunaRepository zaglavljeRacunaRepo, IProizvodRepository proizvodRepo, IHubContext<NotificationHub> hubContext)
         {
             _stavkeRacunaRepo = stavkeRacunaRepo;
             _context = context;
             _zaglavljeRacunaRepo = zaglavljeRacunaRepo;
             _proizvodRepo= proizvodRepo;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -76,6 +79,7 @@ namespace Backend_POS.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = stavkeRacunaModel.StavkaId }, stavkeRacunaModel);
         }
+
 
         [HttpPut]
         [Route("{id}")]

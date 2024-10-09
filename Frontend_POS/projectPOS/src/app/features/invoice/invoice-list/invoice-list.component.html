@@ -30,6 +30,8 @@
               <a class="btn btn-primary btn-action">Uredi</a>
 
               <button (click)="deleteInvoice(item.stavkaId)" class="btn-action btn-danger">Izbriši</button>
+              <button (click)="openEmailModal(template, item.broj)" class="btn btn-primary btn-action">Pošalji e-račun</button>
+
             </td>
           </tr>
         </tbody>
@@ -37,5 +39,26 @@
     </div>
   </div>
 </div>
+<!-- Modal za unos emaila -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Pošalji e-račun putem emaila</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="email">Email adresa:</label>
+      <input type="email" [(ngModel)]="email" class="form-control" placeholder="Unesite email adresu" />
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="sendERacun()">Pošalji</button>
+    <button type="button" class="btn btn-secondary" (click)="modalRef?.hide()">Zatvori</button>
+  </div>
+</ng-template>
+
+
 
 

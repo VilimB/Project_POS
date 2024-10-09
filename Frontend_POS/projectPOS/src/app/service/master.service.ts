@@ -44,6 +44,13 @@ export class MasterService {
     return this.http.put(`http://localhost:5045/api/Proizvod/${id}`, updateDTO);
   }
 
+  generateERacun(zaglavljeId: number): Observable<any> {
+    return this.http.post(`http://localhost:5045/api/racun/generate-e-racun`, { zaglavljeId });
+  }
+  sendERacunByEmail(zaglavljeId: number, email: string): Observable<any> {
+    return this.http.post(`http://localhost:5045/api/racun/generate-e-racun`, { zaglavljeId, email });
+  }
+
 
 
 
