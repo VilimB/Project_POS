@@ -73,14 +73,14 @@ export class MasterService {
   /*saveInvoice(invoiceData: any): Observable<any> {
     return this.http.post("http://localhost:5045/api/StavkeRacuna", invoiceData);
   }*/
-    saveInvoice(broj: any, nazivProizvod: string, invoiceData: any): Observable<any> {
 
-      invoiceData.broj = broj;
-      invoiceData.nazivProizvod = nazivProizvod;
+  saveInvoice(proizvodId: any, zaglavljeId: any, invoiceData: any): Observable<any> {
+    invoiceData.proizvodId = proizvodId;
+    invoiceData.zaglavljeId = zaglavljeId;
 
+    return this.http.post("http://localhost:5045/api/StavkeRacuna", invoiceData);
+}
 
-      return this.http.post("http://localhost:5045/api/StavkeRacuna", invoiceData);
-  }
 
 
 

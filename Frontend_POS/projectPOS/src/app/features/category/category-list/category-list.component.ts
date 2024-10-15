@@ -18,7 +18,7 @@ export class CategoryListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
-    this.initializeSignalRConnection(); // Povezivanje na SignalR
+   /* this.initializeSignalRConnection(); */// Povezivanje na SignalR
   }
 
   loadProducts() {
@@ -44,7 +44,7 @@ export class CategoryListComponent implements OnInit {
       );
     }
   }
-
+/*
   // SignalR konekcija za ažuriranje liste proizvoda
   initializeSignalRConnection() {
     this.notificationService.startConnection();
@@ -57,7 +57,7 @@ export class CategoryListComponent implements OnInit {
         this.products.push(updatedProduct); // Dodavanje novog proizvoda
       }
     });
-  }
+  }*/
 
   // Ažuriranje stanja proizvoda
   azurirajStanje(product: Product) {

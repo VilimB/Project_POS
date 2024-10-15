@@ -20,9 +20,10 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of Invoiceheader">
-            <td>{{item.broj}}</td>
-            <td>{{item.nazivKupac}}</td>
-            <td>{{item.napomena}}</td>
+            <td>{{item.zaglavljeRacuna?.broj || 'Nepoznato'}}</td>
+            <td>{{item.zaglavljeRacuna?.kupac?.nazivKupac || 'Nepoznato'}}</td>
+            <td>{{item.zaglavljeRacuna?.napomena || 'Nepoznato'}}</td>
+
             <td>{{item.popust | percent}}</td>
             <td>{{item.iznosPopusta | currency}}</td>
             <td>{{item.vrijednost | currency:'KM'}}</td>

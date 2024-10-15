@@ -86,11 +86,12 @@
               <tr [formGroupName]="i">
                 <td>{{i+1}}</td>
                 <td>
-                  <select formControlName="nazivProizvod" #proizvod (change)="productChange(proizvod.value, i)" class="form-control">
+                  <select formControlName="proizvodId" #proizvod (change)="productChange(proizvod.value, i)" class="form-control">
                     <option *ngFor="let item of masterProduct" [value]="item.proizvodId">
-                      {{item.nazivProizvod}}
+                        {{item.nazivProizvod}}
                     </option>
-                  </select>
+                </select>
+
                 </td>
                 <td><input formControlName="sifraProizvod" class="form-control" /></td>
                 <td><input formControlName="kolicina" (change)="Itemcalculation(i)" class="form-control" /></td>
