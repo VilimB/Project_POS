@@ -13,6 +13,7 @@ export class InvoiceListComponent implements OnInit {
   selectedInvoiceId: number = 0; // Za pohranu odabranog broja računa
   email: string = ''; // Za pohranu email adrese
   modalRef?: BsModalRef; // Referenca na ngx-bootstrap modal
+  masterService: any;
 
   constructor(
     private service: MasterService,
@@ -24,27 +25,14 @@ export class InvoiceListComponent implements OnInit {
     this.LoadInvoice();
   }
 
-  deleteInvoice(stavkaId: number) {
-    if (confirm('Da li ste sigurni da želite obrisati ovaj proizvod?')) {
-      this.service.DeleteInvoice(stavkaId).subscribe(
-        () => {
-          this.LoadInvoice();
-        },
-        (error: any) => {
-          console.error('Greška prilikom brisanja proizvoda:', error);
-        }
-      );
-    }
-  }
-
   LoadInvoice() {
     this.service.GetAllInvoice().subscribe(
       res => {
-        console.log('Invoice data:', res); // Debugging line
+        console.log('Invoice data:', res);
         this.Invoiceheader = res;
       },
       err => {
-        console.log('Error:', err); // Debugging line
+        console.log('Error:', err);
         this.toastr.error('Failed to load invoices');
       }
     );
@@ -55,21 +43,69 @@ export class InvoiceListComponent implements OnInit {
     this.selectedInvoiceId = invoiceId;
     this.modalRef = this.modalService.show(template); // Prikaz modala
   }
+  deleteInvoice(stavkaId: number) {
+    if (confirm('Da li ste sigurni da želite obrisati ovaj proizvod?')) {
+      this.masterService.DeleteInvoice(stavkaId).subscribe(
+        () => {
+          this.LoadInvoice();
+        },
+        (error: any) => {
+          console.error('Greška prilikom brisanja proizvoda:', error);
+        }
+      );
+    }}
 
   // Funkcija za slanje e-računa na unesenu email adresu
-  sendERacun() {
-    if (this.email) {
-      this.service.sendERacunByEmail(this.selectedInvoiceId, this.email).subscribe(res => {
-        this.toastr.success('E-račun je poslan na ' + this.email);
-        this.modalRef?.hide(); // Zatvori modal nakon slanja
-      }, error => {
-        this.toastr.error('Greška prilikom slanja e-računa.');
-      });
+  sendERacunByEmail() {
+    const zaglavljeId = this.selectedInvoiceId;  // Get the selected invoice ID
+
+    if (this.email && zaglavljeId) {
+      // Payload includes the necessary ID and email
+      const payload = {
+        zaglavljeId: zaglavljeId,
+        email: this.email
+      };
+
+      // Log the payload to see what is being sent
+      console.log('Payload for generating e-racun:', payload);
+
+      // First, generate the e-invoice
+      this.service.generateERacun(payload.zaglavljeId).subscribe(
+        (res) => {
+          // Log the response from e-racun generation
+          console.log('E-racun generation successful:', res);
+          this.toastr.success('E-račun je uspješno generiran!');
+
+          // After generating the e-invoice, send it via email
+          console.log('Sending e-racun via email to:', this.email);  // Log email being used
+          this.service.sendERacunByEmail(payload).subscribe(
+            (emailRes) => {
+              // Log the response from sending the email
+              console.log('E-racun successfully sent via email:', emailRes);
+              this.toastr.success(`E-račun je poslan na ${this.email}`);
+            },
+            (emailError) => {
+              // Log any errors during the email sending process
+              console.error('Error during e-racun email sending:', emailError);
+              this.toastr.error('Greška prilikom slanja e-računa.');
+            }
+          );
+        },
+        (error) => {
+          // Log any errors during e-racun generation
+          console.error('Error during e-racun generation:', error);
+          this.toastr.error('Greška prilikom generiranja e-računa.');
+        }
+      );
     } else {
-      this.toastr.warning('Unesite ispravnu email adresu.');
+      this.toastr.warning('Unesite email adresu.');
     }
-  }
 }
+
+
+
+}
+
 
 /*import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MasterService } from '../../../service/master.service';

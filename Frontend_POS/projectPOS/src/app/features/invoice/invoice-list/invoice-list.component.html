@@ -31,7 +31,7 @@
               <a class="btn btn-primary btn-action">Uredi</a>
 
               <button (click)="deleteInvoice(item.stavkaId)" class="btn-action btn-danger">Izbriši</button>
-              <button (click)="openEmailModal(template, item.broj)" class="btn btn-primary btn-action">Pošalji e-račun</button>
+              <button (click)="openEmailModal(template, item.zaglavljeRacuna?.zaglavljeId)" class="btn btn-primary btn-action">Pošalji e-račun</button>
 
             </td>
           </tr>
@@ -55,7 +55,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="sendERacun()">Pošalji</button>
+    <button type="button" class="btn btn-primary" (click)="sendERacunByEmail()">Pošalji</button>
     <button type="button" class="btn btn-secondary" (click)="modalRef?.hide()">Zatvori</button>
   </div>
 </ng-template>

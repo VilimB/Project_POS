@@ -39,7 +39,11 @@ namespace Backend_POS.Repository
 
         public async Task<List<StavkeRacuna>> GetAllAsync()
         {
-            return await _context.StavkeRacuna.ToListAsync();
+            return await _context.StavkeRacuna
+                                 .Include(s => s.Proizvod) // Dohvati povezane podatke o Proizvodu
+                                 .Include(s => s.ZaglavljeRacuna) // Dohvati Zaglavlje računa
+                                    .ThenInclude(z => z.Kupac)  // Dohvati povezane podatke o Zaglavlju računa
+                                 .ToListAsync();
         }
 
         public async Task<StavkeRacuna> GetByIdAsync(int id)

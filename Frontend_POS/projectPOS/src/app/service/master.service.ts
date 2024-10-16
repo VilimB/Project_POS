@@ -44,12 +44,16 @@ export class MasterService {
     return this.http.put(`http://localhost:5045/api/Proizvod/${id}`, updateDTO);
   }
 
-  generateERacun(zaglavljeId: number): Observable<any> {
-    return this.http.post(`http://localhost:5045/api/racun/generate-e-racun`, { zaglavljeId });
-  }
-  sendERacunByEmail(zaglavljeId: number, email: string): Observable<any> {
-    return this.http.post(`http://localhost:5045/api/racun/generate-e-racun`, { zaglavljeId, email });
-  }
+  // Generate e-invoice
+generateERacun(zaglavljeId: number) {
+  return this.http.post(`http://localhost:5045/api/racun/generate-e-racun`, { zaglavljeId });
+}
+
+// Send e-invoice via email
+sendERacunByEmail(payload: { zaglavljeId: number, email: string }) {
+  return this.http.post(`http://localhost:5045/api/racun/send-e-racun-email`, payload);
+}
+
 
 
 

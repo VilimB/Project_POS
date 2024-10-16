@@ -88,6 +88,45 @@ namespace Backend_POS.Migrations
                     b.ToTable("Proizvod");
                 });
 
+            modelBuilder.Entity("Backend_POS.Models.DbSet.Racun", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BrojRacuna")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("DatumIzdavanja")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("KupacId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("XmlRacun")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("ZaglavljeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KupacId");
+
+                    b.HasIndex("ZaglavljeId")
+                        .IsUnique();
+
+                    b.ToTable("Racun");
+                });
+
             modelBuilder.Entity("Backend_POS.Models.DbSet.StavkeRacuna", b =>
                 {
                     b.Property<int>("StavkaId")
@@ -95,9 +134,6 @@ namespace Backend_POS.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("StavkaId"));
-
-                    b.Property<int>("Broj")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("CijenaStavka")
                         .HasColumnType("decimal(65,30)");
@@ -108,14 +144,13 @@ namespace Backend_POS.Migrations
                     b.Property<int>("Kolicina")
                         .HasColumnType("int");
 
-                    b.Property<string>("NazivProizvod")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<decimal>("Popust")
                         .HasColumnType("decimal(65,30)");
 
                     b.Property<int>("ProizvodId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RacunId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Vrijednost")
@@ -127,6 +162,8 @@ namespace Backend_POS.Migrations
                     b.HasKey("StavkaId");
 
                     b.HasIndex("ProizvodId");
+
+                    b.HasIndex("RacunId");
 
                     b.HasIndex("ZaglavljeId");
 
@@ -259,13 +296,13 @@ namespace Backend_POS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5b482ea5-7e86-457f-bb2b-466c996fb90c",
+                            Id = "dad6919e-3ada-4e1f-8cda-c79b0d4c53b9",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "e22320bf-7487-4803-967d-926f6659c492",
+                            Id = "01671698-dd98-4274-8174-14d5b4958a3b",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -377,6 +414,25 @@ namespace Backend_POS.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Backend_POS.Models.DbSet.Racun", b =>
+                {
+                    b.HasOne("Backend_POS.Models.DbSet.Kupac", "Kupac")
+                        .WithMany()
+                        .HasForeignKey("KupacId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend_POS.Models.DbSet.ZaglavljeRacuna", "ZaglavljeRacuna")
+                        .WithOne()
+                        .HasForeignKey("Backend_POS.Models.DbSet.Racun", "ZaglavljeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Kupac");
+
+                    b.Navigation("ZaglavljeRacuna");
+                });
+
             modelBuilder.Entity("Backend_POS.Models.DbSet.StavkeRacuna", b =>
                 {
                     b.HasOne("Backend_POS.Models.DbSet.Proizvod", "Proizvod")
@@ -384,6 +440,10 @@ namespace Backend_POS.Migrations
                         .HasForeignKey("ProizvodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Backend_POS.Models.DbSet.Racun", null)
+                        .WithMany("Stavke")
+                        .HasForeignKey("RacunId");
 
                     b.HasOne("Backend_POS.Models.DbSet.ZaglavljeRacuna", "ZaglavljeRacuna")
                         .WithMany("StavkeRacunas")
@@ -466,6 +526,11 @@ namespace Backend_POS.Migrations
             modelBuilder.Entity("Backend_POS.Models.DbSet.Proizvod", b =>
                 {
                     b.Navigation("StavkeRacunas");
+                });
+
+            modelBuilder.Entity("Backend_POS.Models.DbSet.Racun", b =>
+                {
+                    b.Navigation("Stavke");
                 });
 
             modelBuilder.Entity("Backend_POS.Models.DbSet.ZaglavljeRacuna", b =>

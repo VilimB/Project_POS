@@ -53,7 +53,7 @@ namespace Backend_POS.Controllers
 
             return Ok(stavkeRacuna.ToStavkeRacunaDTO());
         }
-        [HttpPost]
+        /*[HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateStavkeRacunaRequestDTO stavkeRacunaDTO)
         {
             Console.WriteLine("Received request:");
@@ -78,7 +78,31 @@ namespace Backend_POS.Controllers
             await _stavkeRacunaRepo.CreateAsync(stavkeRacunaModel);
 
             return CreatedAtAction(nameof(GetById), new { id = stavkeRacunaModel.StavkaId }, stavkeRacunaModel);
+        }*/
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateStavkeRacunaRequestDTO stavkeRacunaDTO)
+        {
+            // Provjera postojanja zaglavlja i proizvoda po ID-evima
+            var zaglavljeRacuna = await _zaglavljeRacunaRepo.GetByIdAsync(stavkeRacunaDTO.ZaglavljeId);
+            if (zaglavljeRacuna == null)
+            {
+                return BadRequest("Zaglavlje računa ne postoji");
+            }
+
+            var proizvod = await _proizvodRepo.GetByIdAsync(stavkeRacunaDTO.ProizvodId);
+            if (proizvod == null)
+            {
+                return BadRequest("Proizvod ne postoji");
+            }
+
+            // Kreiranje modela stavke računa
+            var stavkeRacunaModel = stavkeRacunaDTO.ToStavkeRacunaFromCreateDTO(stavkeRacunaDTO.ZaglavljeId, stavkeRacunaDTO.ProizvodId);
+
+            await _stavkeRacunaRepo.CreateAsync(stavkeRacunaModel);
+
+            return CreatedAtAction(nameof(GetById), new { id = stavkeRacunaModel.StavkaId }, stavkeRacunaModel);
         }
+
 
 
         [HttpPut]

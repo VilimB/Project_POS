@@ -104,9 +104,46 @@ export class AddInvoiceComponent implements OnInit {
         }
 
       }
+      SaveInvoice() {
+        if (this.invoiceform.valid) {
+          const zaglavljeData = this.invoiceform.getRawValue(); // Podaci za zaglavlje
+          const kupacId = this.userId; // Pretpostavka da je userId zapravo kupacId
+
+          if (!kupacId) {
+            this.toastr.warning('Kupac nije odabran!', 'Validacija');
+            return;
+          }
+
+          // Pošalji zahtjev za kreiranje zaglavlja
+          this.service.saveZaglavlje(zaglavljeData, kupacId).subscribe((response: any) => {
+            const zaglavljeId = response.zaglavljeId; // Dohvati generirani zaglavljeId
+
+            // Provjeri je li zaglavlje uspješno kreirano
+            if (zaglavljeId) {
+              // Dodaj stavke računa sa generiranim zaglavljeId
+              this.proizvodip.controls.forEach((control) => {
+                const stavkaData = control.value;
+                this.service.saveInvoice(stavkaData.proizvodId, zaglavljeId, stavkaData).subscribe(res => {
+                  this.toastr.success('Stavka je uspješno sačuvana!');
+                }, (error) => {
+                  this.toastr.error('Greška prilikom spremanja stavke.');
+                });
+              });
+            } else {
+              this.toastr.error('Greška prilikom generiranja zaglavlja.');
+            }
+          }, (error) => {
+            this.toastr.error('Greška prilikom spremanja zaglavlja.');
+          });
+        } else {
+          this.toastr.warning('Unesite sve obavezne podatke!', 'Validacija');
+        }
+      }
 
 
-        SaveInvoice() {
+
+
+        /*SaveInvoice() {
           if (this.invoiceform.valid) {
               // Umjesto 'broj', sada koristiš ZaglavljeId
               const zaglavljeId = this.userId;
@@ -121,35 +158,23 @@ export class AddInvoiceComponent implements OnInit {
                       this.service.saveInvoice(proizvodId, zaglavljeId, invoiceData).subscribe(res => {
                           this.toastr.success('Stavka je uspješno sačuvana!');
                       });
-                  });/*
-                      this.service.generateERacun(zaglavljeId).subscribe(res => {
-                      this.toastr.success('E-račun je uspješno generiran!');
-                      this.updateStock();
-                  }); */
+                  });
 
               });
+
               const invoiceData = this.invoiceform.getRawValue();
+              invoiceData.zaglavljeId = zaglavljeId;
               console.log('Podaci koji se šalju:', invoiceData);
 
           } else {
               this.toastr.warning('Unesite sve obavezne podatke!', 'Validacija');
           }
-      }
+      }*/
 
 
 
 
-  /*updateStock() {
-    this.proizvodip.controls.forEach((control) => {
-      let proizvodId = control.get("sifraProizvod")?.value;
-      let kolicina = control.get("kolicina")?.value;
 
-      this.service.UpdateProduct(proizvodId, kolicina).subscribe(res => {
-        console.log('Ažurirano stanje za proizvod:', res);
-        this.notificationService.sendUpdate(JSON.stringify(res)); // Slanje ažuriranja putem SignalR-a
-      });
-    });
-  }*/
 
   addnewproduct(): void {
     const proizvodGroup = this.builder.group({
@@ -217,3 +242,14 @@ export class AddInvoiceComponent implements OnInit {
           this.toastr.warning('Unesite sve obavezne podatke!', 'Validacija');
         }
       }*/
+/*updateStock() {
+    this.proizvodip.controls.forEach((control) => {
+      let proizvodId = control.get("sifraProizvod")?.value;
+      let kolicina = control.get("kolicina")?.value;
+
+      this.service.UpdateProduct(proizvodId, kolicina).subscribe(res => {
+        console.log('Ažurirano stanje za proizvod:', res);
+        this.notificationService.sendUpdate(JSON.stringify(res)); // Slanje ažuriranja putem SignalR-a
+      });
+    });
+  }*/

@@ -1,0 +1,387 @@
+[
+  {
+    "ContainingType": "AccountController",
+    "Method": "Login",
+    "RelativePath": "api/account/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginDTO",
+        "Type": "Backend_POS.Models.DTO.Account.LoginDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AccountController",
+    "Method": "Register",
+    "RelativePath": "api/account/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "registerDTO",
+        "Type": "Backend_POS.Models.DTO.Account.RegisterDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.KupacController",
+    "Method": "GetAll",
+    "RelativePath": "api/Kupac",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.KupacController",
+    "Method": "Create",
+    "RelativePath": "api/Kupac",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "kupacDTO",
+        "Type": "Backend_POS.Models.DTO.Kupac.CreateKupacRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.KupacController",
+    "Method": "GetById",
+    "RelativePath": "api/Kupac/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.KupacController",
+    "Method": "Update",
+    "RelativePath": "api/Kupac/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateKupacDTO",
+        "Type": "Backend_POS.Models.DTO.Kupac.UpdateKupacRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.KupacController",
+    "Method": "Delete",
+    "RelativePath": "api/Kupac/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.ProizvodController",
+    "Method": "GetAll",
+    "RelativePath": "api/Proizvod",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.ProizvodController",
+    "Method": "Create",
+    "RelativePath": "api/Proizvod",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "proizvodDTO",
+        "Type": "Backend_POS.Models.DTO.Proizvod.CreateProizvodRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.ProizvodController",
+    "Method": "GetById",
+    "RelativePath": "api/Proizvod/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.ProizvodController",
+    "Method": "Update",
+    "RelativePath": "api/Proizvod/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateDTO",
+        "Type": "Backend_POS.Models.DTO.Proizvod.UpdateProizvodRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.ProizvodController",
+    "Method": "Delete",
+    "RelativePath": "api/Proizvod/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RacunController",
+    "Method": "GenerateERacun",
+    "RelativePath": "api/racun/generate-e-racun",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Backend_POS.Models.DTO.Racun.CreateRacunDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RacunController",
+    "Method": "SendERacunByEmail",
+    "RelativePath": "api/racun/send-e-racun-email",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Backend_POS.Models.DTO.Racun.SendERacunEmailDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.StavkeRacunaController",
+    "Method": "GetAll",
+    "RelativePath": "api/StavkeRacuna",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.StavkeRacunaController",
+    "Method": "Create",
+    "RelativePath": "api/StavkeRacuna",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "stavkeRacunaDTO",
+        "Type": "Backend_POS.Models.DTO.StavkeRacuna.CreateStavkeRacunaRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.StavkeRacunaController",
+    "Method": "GetById",
+    "RelativePath": "api/StavkeRacuna/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.StavkeRacunaController",
+    "Method": "Update",
+    "RelativePath": "api/StavkeRacuna/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateStavkeRacunaDTO",
+        "Type": "Backend_POS.Models.DTO.StavkeRacuna.UpdateStavkeRacunaRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.StavkeRacunaController",
+    "Method": "Delete",
+    "RelativePath": "api/StavkeRacuna/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.ZaglavljeRacunaController",
+    "Method": "GetAll",
+    "RelativePath": "api/ZaglavljeRacuna",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.ZaglavljeRacunaController",
+    "Method": "GetById",
+    "RelativePath": "api/ZaglavljeRacuna/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.ZaglavljeRacunaController",
+    "Method": "Update",
+    "RelativePath": "api/ZaglavljeRacuna/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateZaglavljeRacunaDTO",
+        "Type": "Backend_POS.Models.DTO.ZaglavljeRacuna.UpdateZaglavljeRacunaRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.ZaglavljeRacunaController",
+    "Method": "Delete",
+    "RelativePath": "api/ZaglavljeRacuna/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_POS.Controllers.ZaglavljeRacunaController",
+    "Method": "Create",
+    "RelativePath": "api/ZaglavljeRacuna/{kupacId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "kupacId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "zaglavljeRacunaDTO",
+        "Type": "Backend_POS.Models.DTO.ZaglavljeRacuna.CreateZaglavljeRacunaRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

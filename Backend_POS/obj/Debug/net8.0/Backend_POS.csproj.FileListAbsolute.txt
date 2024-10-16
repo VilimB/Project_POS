@@ -238,3 +238,4 @@ C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\refint\Bac
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\Backend_POS.pdb
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\Backend_POS.genruntimeconfig.cache
 C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\obj\Debug\net8.0\ref\Backend_POS.dll
+C:\Users\DT User\source\repos\ProjectPOS\Backend_POS\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll

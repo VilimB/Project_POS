@@ -46,7 +46,7 @@ namespace Backend_POS.Controllers
 
             return Ok(zaglavljeRacuna.ToZaglavljeRacunaDTO());
         }
-        [HttpPost("{kupacId}")]
+        /*[HttpPost("{kupacId}")]
         public async Task<IActionResult> Create([FromRoute] int kupacId, [FromBody] CreateZaglavljeRacunaRequestDTO zaglavljeRacunaDTO)
         {
             if (!await _kupacRepo.KupacExists(kupacId))
@@ -56,6 +56,27 @@ namespace Backend_POS.Controllers
             zaglavljeRacunaDTO.KupacId = kupacId;
             var zaglavljeRacunaModel = zaglavljeRacunaDTO.ToZaglavljeRacunaFromCreateDTO(kupacId);
             await _zaglavljeRacunaRepo.CreateAsync(zaglavljeRacunaModel);
+            return CreatedAtAction(nameof(GetById), new { id = zaglavljeRacunaModel.ZaglavljeId }, zaglavljeRacunaModel.ToZaglavljeRacunaDTO());
+        }
+        */
+        [HttpPost("{kupacId}")]
+        public async Task<IActionResult> Create([FromRoute] int kupacId, [FromBody] CreateZaglavljeRacunaRequestDTO zaglavljeRacunaDTO)
+        {
+            if (!await _kupacRepo.KupacExists(kupacId))
+            {
+                return BadRequest("Kupac ne postoji");
+            }
+
+            // Postavi KupacId
+            zaglavljeRacunaDTO.KupacId = kupacId;
+
+            // Pretvori DTO u model
+            var zaglavljeRacunaModel = zaglavljeRacunaDTO.ToZaglavljeRacunaFromCreateDTO(kupacId);
+
+            // Spremi u bazu podataka
+            await _zaglavljeRacunaRepo.CreateAsync(zaglavljeRacunaModel);
+
+            // Vrati novo kreirani zaglavljeId
             return CreatedAtAction(nameof(GetById), new { id = zaglavljeRacunaModel.ZaglavljeId }, zaglavljeRacunaModel.ToZaglavljeRacunaDTO());
         }
 

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Backend_POS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+50f72a34e12d39e8783f8d1f980babe3d4032ef3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5ce001cd9d90213c8f6240be72f76a5aa5b7cc6c")]
 [assembly: System.Reflection.AssemblyProductAttribute("Backend_POS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Backend_POS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

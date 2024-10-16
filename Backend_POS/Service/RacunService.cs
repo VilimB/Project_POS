@@ -1,8 +1,12 @@
 using Backend_POS.Data;
 using Backend_POS.Models.DbSet;
+using Backend_POS.Models.DTO.Stavke_Racuna;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
+using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -17,12 +21,79 @@ namespace Backend_POS.Service
             _context = context;
         }
 
+        // Metoda za dohvaæanje e-raèuna prema Id-u
         public ZaglavljeRacuna GetERacunById(int zaglavljeId)
         {
-            // Dohvati zaglavlje raèuna s generiranim XML-om
             return _context.ZaglavljeRacuna
                 .FirstOrDefault(z => z.ZaglavljeId == zaglavljeId);
         }
+        public bool SendERacunEmail(string email, string xmlRacun)
+        {
+            try
+            {
+                // Configure email client
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 465); 
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential("vilipavo12@gmail.com", "busmjtilsscnduqg");
+                client.EnableSsl = true;  // Omoguæi SSL/TLS
+
+                // Email message setup
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress("vilipavo12@gmail.com");
+                mailMessage.To.Add(email);
+                mailMessage.Subject = "E-Raèun";
+                mailMessage.Body = "U privitku se nalazi vaš e-raèun.";
+
+                // Attach the generated XML as an attachment
+                mailMessage.Attachments.Add(new Attachment(
+                    new MemoryStream(Encoding.UTF8.GetBytes(xmlRacun)), "eRacun.xml"));
+
+                // Send the email
+                client.Send(mailMessage);
+
+                Console.WriteLine("Email poslan uspješno."); // Log za provjeru
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Greška prilikom slanja emaila: {ex.Message}"); // Dodaj ispis greške
+                return false;
+            }
+        }
+
+        /*public bool SendERacunEmail(string email, string xmlRacun)
+        {
+            try
+            {
+                // Configure email client
+                SmtpClient client = new SmtpClient("smtp.gmail.com");
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential("vilipavo12@gmail.com", "busmjtilsscnduqg");
+
+                // Email message setup
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress("vilipavo12@gmail.com");
+                mailMessage.To.Add(email);
+                mailMessage.Subject = "E-Raèun";
+                mailMessage.Body = "U privitku se nalazi vaš e-raèun.";
+
+                // Attach the generated XML as an attachment
+                mailMessage.Attachments.Add(new Attachment(new MemoryStream(Encoding.UTF8.GetBytes(xmlRacun)), "eRacun.xml"));
+
+                // Send the email
+                client.Send(mailMessage);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }*/
+
+
+
 
         // Metoda za generiranje XML-a za e-raèun
         public string GenerateERacunXml(int zaglavljeId)
@@ -38,7 +109,7 @@ namespace Backend_POS.Service
                 throw new Exception("Zaglavlje raèuna nije pronaðeno.");
             }
 
-            // Kreiraj XML strukturu
+            // Kreiranje XML strukture
             var xmlDoc = new XDocument(
                 new XElement("Racun",
                     new XElement("BrojRacuna", zaglavlje.Broj),
@@ -51,7 +122,6 @@ namespace Backend_POS.Service
                     new XElement("Stavke",
                         from stavka in zaglavlje.StavkeRacunas
                         select new XElement("Stavka",
-                            new XElement("Proizvod", stavka.NazivProizvod),
                             new XElement("Kolicina", stavka.Kolicina),
                             new XElement("CijenaStavka", stavka.CijenaStavka),
                             new XElement("Popust", stavka.Popust),
@@ -63,10 +133,10 @@ namespace Backend_POS.Service
                 )
             );
 
-            // Potpiši XML
+            // Potpisivanje XML-a
             string signedXml = SignERacunXml(xmlDoc.ToString());
 
-            // Vrati potpisani XML
+            // Povrat potpisanog XML-a
             return signedXml;
         }
 
@@ -79,10 +149,10 @@ namespace Backend_POS.Service
 
             if (zaglavlje != null)
             {
-                // Generiraj XML
+                // Generiranje XML-a
                 string xmlRacun = GenerateERacunXml(zaglavljeId);
 
-                // Spremi XML u bazu
+                // Spremanje XML-a u bazu
                 zaglavlje.XmlRacun = xmlRacun;
                 _context.SaveChanges();
             }
@@ -91,8 +161,8 @@ namespace Backend_POS.Service
         // Metoda za potpisivanje XML-a
         public string SignERacunXml(string xmlRacun)
         {
-            // Uèitaj X.509 certifikat (ovdje se koristi lokalni certifikat za potpisivanje)
-            X509Certificate2 cert = new X509Certificate2("path_to_your_certificate.pfx", "your_password");
+            // Dohvati certifikat iz Windows Certificate Store-a pomoæu Thumbprint-a
+            X509Certificate2 cert = GetCertificateFromStore("a7d47a4ee1d500001abdd7582bc52d9f68b2f3b6");
 
             // Uèitaj XML dokument
             XmlDocument xmlDoc = new XmlDocument();
@@ -100,7 +170,7 @@ namespace Backend_POS.Service
 
             // Kreiraj objekt za potpisivanje
             SignedXml signedXml = new SignedXml(xmlDoc);
-            signedXml.SigningKey = cert.GetRSAPrivateKey();  // Koristi GetRSAPrivateKey za zastarjelu metodu
+            signedXml.SigningKey = cert.GetRSAPrivateKey();
 
             // Referenca na korijenski element
             Reference reference = new Reference();
@@ -122,6 +192,27 @@ namespace Backend_POS.Service
             xmlDoc.DocumentElement.AppendChild(xmlDoc.ImportNode(xmlSignature, true));
 
             return xmlDoc.OuterXml;
+        }
+
+        // Metoda za dohvaæanje certifikata iz Windows Certificate Store-a pomoæu Thumbprint-a
+        public X509Certificate2 GetCertificateFromStore(string thumbprint)
+        {
+            X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+            store.Open(OpenFlags.ReadOnly);
+
+            X509Certificate2Collection certCollection = store.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, false);
+
+            if (certCollection.Count > 0)
+            {
+                X509Certificate2 cert = certCollection[0];
+                store.Close();
+                return cert;
+            }
+            else
+            {
+                store.Close();
+                throw new Exception("Certifikat nije pronaðen.");
+            }
         }
     }
 }
