@@ -27,7 +27,60 @@ namespace Backend_POS.Service
             return _context.ZaglavljeRacuna
                 .FirstOrDefault(z => z.ZaglavljeId == zaglavljeId);
         }
+        public bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public bool SendERacunEmail(string email, string xmlRacun)
+        {
+            try
+            {
+                Console.WriteLine("Poèetak slanja emaila...");
+
+                using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    client.Credentials = new NetworkCredential("vilipavo12@gmail.com", "busmjtilsscnduqg");
+                    client.EnableSsl = true;
+
+                    MailMessage mailMessage = new MailMessage
+                    {
+                        From = new MailAddress("vilipavo12@gmail.com"),
+                        Subject = "E-Raèun",
+                        Body = "U privitku se nalazi vaš e-raèun."
+                    };
+                    mailMessage.To.Add(email);
+
+                    // Dodavanje XML datoteke kao privitka
+                    mailMessage.Attachments.Add(new Attachment(new MemoryStream(Encoding.UTF8.GetBytes(xmlRacun)), "eRacun.xml"));
+
+                    Console.WriteLine("Slanje emaila...");
+                    client.Send(mailMessage);
+                }
+
+                Console.WriteLine("Email uspješno poslan.");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Greška prilikom slanja emaila: {ex.Message}");
+                return false;
+            }
+        }
+
+
+        /*public bool SendERacunEmail(string email, string xmlRacun)
         {
             try
             {
@@ -58,36 +111,6 @@ namespace Backend_POS.Service
             catch (Exception ex)
             {
                 Console.WriteLine($"Greška prilikom slanja emaila: {ex.Message}"); // Dodaj ispis greške
-                return false;
-            }
-        }
-
-        /*public bool SendERacunEmail(string email, string xmlRacun)
-        {
-            try
-            {
-                // Configure email client
-                SmtpClient client = new SmtpClient("smtp.gmail.com");
-                client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential("vilipavo12@gmail.com", "busmjtilsscnduqg");
-
-                // Email message setup
-                MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress("vilipavo12@gmail.com");
-                mailMessage.To.Add(email);
-                mailMessage.Subject = "E-Raèun";
-                mailMessage.Body = "U privitku se nalazi vaš e-raèun.";
-
-                // Attach the generated XML as an attachment
-                mailMessage.Attachments.Add(new Attachment(new MemoryStream(Encoding.UTF8.GetBytes(xmlRacun)), "eRacun.xml"));
-
-                // Send the email
-                client.Send(mailMessage);
-
-                return true;
-            }
-            catch (Exception)
-            {
                 return false;
             }
         }*/

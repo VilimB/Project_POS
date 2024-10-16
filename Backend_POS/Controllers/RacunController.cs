@@ -44,9 +44,63 @@ public class RacunController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
-
-
     [HttpPost("send-e-racun-email")]
+    public IActionResult SendERacunByEmail([FromBody] SendERacunEmailDTO request)
+    {
+        try
+        {
+            Console.WriteLine($"Poèetak slanja e-raèuna za zaglavlje ID: {request.ZaglavljeId} na email: {request.Email}");
+
+            // Generiraj e-raèun prije slanja
+            string eRacunXml = _racunService.GenerateERacunXml(request.ZaglavljeId);
+
+            if (string.IsNullOrEmpty(eRacunXml))
+            {
+                Console.WriteLine("E-raèun nije generiran za ovaj raèun.");
+                return BadRequest(new { message = "E-raèun nije generiran za ovaj raèun." });
+            }
+
+            // Pošalji e-raèun putem emaila
+            bool emailSent = _racunService.SendERacunEmail(request.Email, eRacunXml);
+
+            if (!emailSent)
+            {
+                Console.WriteLine("Došlo je do greške prilikom slanja emaila.");
+                return BadRequest(new { message = "Greška prilikom slanja e-raèuna." });
+            }
+
+            Console.WriteLine("E-raèun je uspješno poslan!");
+            return Ok(new { message = "E-raèun je uspješno poslan." });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Greška prilikom slanja e-raèuna: {ex.Message}");
+            return BadRequest(new { message = $"Greška: {ex.Message}" });
+        }
+    }
+
+
+
+    // Pomoæna metoda za validaciju email adrese
+    private bool IsValidEmail(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            return false;
+
+        try
+        {
+            var addr = new System.Net.Mail.MailAddress(email);
+            return addr.Address == email;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+}
+
+
+    /*[HttpPost("send-e-racun-email")]
     public IActionResult SendERacunByEmail([FromBody] SendERacunEmailDTO request)
     {
         try
@@ -74,82 +128,23 @@ public class RacunController : ControllerBase
         }
     }
 
-}
-
-
-/*using Backend_POS.Service;
-using Microsoft.AspNetCore.Mvc;
-using Backend_POS.Models.DTO.Racun;
-using Backend_POS.Models.DTO.ZaglavljeRacuna;
-
-[ApiController]
-[Route("api/racun")]
-public class RacunController : ControllerBase
+}*/
+/*[HttpPost("send-e-racun-email")]
+public IActionResult SendERacunByEmail([FromBody] SendERacunEmailDTO request)
 {
-    private readonly RacunService _racunService;
-
-    // Konstruktor koji prima RacunService putem DI
-    public RacunController(RacunService racunService)
+    if (!IsValidEmail(request.Email))
     {
-        _racunService = racunService;
+        return BadRequest(new { message = "Neispravna email adresa." });
     }
 
-    [HttpPost]
-    [Route("generate-e-racun")]
-    public IActionResult GenerateERacun([FromBody] int zaglavljeId)
+    bool result = _racunService.SendERacunEmail(request.Email, request.XmlRacun);
+    if (result)
     {
-        try
-        {
-            // Generiraj e-raèun
-            string xmlRacun = _racunService.GenerateERacunXml(zaglavljeId);
-
-            // Dohvati zaglavlje raèuna
-            var zaglavlje = _racunService.GetERacunById(zaglavljeId);
-
-            if (zaglavlje == null)
-            {
-                return NotFound(new { message = "Raèun nije pronaðen." });
-            }
-
-            // Kreiraj DTO s podacima i generiranim XML-om
-            var response = new ZaglavljeRacunaDTO
-            {
-                ZaglavljeId = zaglavlje.ZaglavljeId,
-                Broj = zaglavlje.Broj,
-                Datum = zaglavlje.Datum,
-                KupacId = zaglavlje.KupacId,
-                XmlRacun = xmlRacun  // Generirani XML
-            };
-
-            return Ok(response);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
+        return Ok(new { message = "E-raèun je uspješno poslan." });
     }
-
-    [HttpGet]
-    [Route("get-e-racun/{zaglavljeId}")]
-    public IActionResult GetERacun(int zaglavljeId)
+    else
     {
-        try
-        {
-            // Dohvati zaglavlje raèuna s XML-om
-            var zaglavlje = _racunService.GetERacunById(zaglavljeId);
-
-            if (zaglavlje == null || string.IsNullOrEmpty(zaglavlje.XmlRacun))
-            {
-                return NotFound(new { message = "E-raèun nije pronaðen ili nije generiran." });
-            }
-
-            // Vrati generirani XML kao odgovor
-            return Ok(new { xml = zaglavlje.XmlRacun });
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
+        return BadRequest(new { message = "Greška prilikom slanja e-raèuna." });
     }
 }
 */
